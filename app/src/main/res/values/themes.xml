@@ -6,4 +6,7 @@
     </style>
 
     <style name="Theme.Tourism_App" parent="Base.Theme.Tourism_App" />
+    <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/gold</item>
+    </style>
 </resources>
