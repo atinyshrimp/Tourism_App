@@ -1,13 +1,8 @@
 package com.example.tourism_app
 
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.example.tourism_app.databinding.ActivityMain2Binding
 import com.example.tourism_app.ui.dashboard.DashboardFragment
 import com.example.tourism_app.ui.home.HomeFragment
@@ -23,6 +18,8 @@ class MainActivity2 : AppCompatActivity() {
 
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // default fragment is Home
         replaceFragment(HomeFragment())
 
         binding.navView.setOnItemSelectedListener {

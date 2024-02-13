@@ -5,4 +5,12 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_profile">Profile</string>
+    <string name="greetings">Welcome back,</string>
+    <string name="categories">Popular Categories</string>
+    <string name="activity_heading">Venture easily in Paris!</string>
+    <string name="allFilter">All</string>
+    <string name="popularFilter">Popular</string>
+    <string name="recommendedFilter">Recommended</string>
+    <string name="visitedFilter">Most visited</string>
+    <string name="searchPlaceholder">Discover a place...</string>
 </resources>

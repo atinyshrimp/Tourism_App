@@ -9,4 +9,20 @@
     <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@color/gold</item>
     </style>
+    <style name="circular_icon">
+        <item name="cornerSize">50%</item>
+    </style>
+    <style name="Widget.App.TabLayout" parent="Widget.Material3.TabLayout">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.TabLayout</item>
+    </style>
+
+    <style name="ThemeOverlay.App.TabLayout" parent="">
+        <item name="colorPrimary">@color/gold</item>
+        <item name="colorOnSurfaceVariant">@color/black</item>
+    </style>
+
+    <style name="tab_appearance">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/gold</item>
+    </style>
 </resources>
