@@ -12,6 +12,9 @@
     <style name="circular_icon">
         <item name="cornerSize">50%</item>
     </style>
+    <style name="image_shape">
+        <item name="cornerSize">20dp</item>
+    </style>
     <style name="Widget.App.TabLayout" parent="Widget.Material3.TabLayout">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.TabLayout</item>
     </style>

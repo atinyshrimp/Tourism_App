@@ -3,6 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gold">#D6C27A</color>
+    <color name="half_gold">#80D6C27A</color>
     <color name="olympic_pink">#E93659</color>
     <color name="olympic_blue">#0580C7</color>
     <color name="olympic_yellow">#F1B821</color>
