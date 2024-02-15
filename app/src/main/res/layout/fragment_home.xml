@@ -9,6 +9,21 @@
     android:paddingEnd="15dp"
     tools:context=".ui.home.HomeFragment">
 
+    <Button
+        android:id="@+id/btnAllActivities"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center|center_horizontal"
+        android:minWidth="0dip"
+        android:minHeight="0dip"
+        android:text="@string/btnAll"
+        android:textAlignment="viewStart"
+        android:textAllCaps="true"
+        android:textColor="@color/gold"
+        app:layout_constraintEnd_toEndOf="@+id/activityLayout"
+        app:layout_constraintTop_toBottomOf="@+id/activityLayout" />
+
     <LinearLayout
         android:id="@+id/userLayout"
         android:layout_width="match_parent"
@@ -56,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="24sp"
-                    android:text="Jane Doe!"
+                    android:text="@string/username"
                     android:textAlignment="viewStart"
                     android:textColor="@color/black"
                     android:textSize="24sp"
@@ -74,6 +89,7 @@
         android:layout_marginTop="30dp"
         android:background="@drawable/searchbar_background"
         android:iconifiedByDefault="false"
+        android:orientation="horizontal"
         android:queryHint="@string/searchPlaceholder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -124,8 +140,13 @@
         </com.google.android.material.tabs.TabLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/activityList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:paddingBottom="5dp" />
 
     </LinearLayout>
 
@@ -133,11 +154,11 @@
         android:id="@+id/categoryLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="70dp"
+        android:layout_marginTop="30dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnAllActivities">
 
         <View
             android:id="@+id/divider"
@@ -151,7 +172,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="8dp"
-            android:text="@string/categories"
+            android:text="@string/popCategories"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -162,18 +183,16 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/text_home"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/button2"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:minWidth="0dip"
+        android:minHeight="0dip"
+        android:text="@string/btnAll"
+        android:textColor="@color/gold"
+        app:layout_constraintEnd_toEndOf="@+id/categoryLayout"
+        app:layout_constraintTop_toBottomOf="@+id/categoryLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
