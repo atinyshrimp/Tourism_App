@@ -8,6 +8,7 @@
     <string name="greetings">Welcome back,</string>
     <string name="username">Jane Doe!</string>
     <string name="popCategories">Popular Categories</string>
+    <string name="category">Category</string>
     <string name="activity_heading">Venture easily in Paris!</string>
     <string name="allFilter">All</string>
     <string name="popularFilter">Popular</string>

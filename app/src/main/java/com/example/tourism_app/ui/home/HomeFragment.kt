@@ -10,12 +10,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tourism_app.Activity
 import com.example.tourism_app.ActivityRecyclerAdapter
+import com.example.tourism_app.Category
+import com.example.tourism_app.CategoryAdapter
+import com.example.tourism_app.R
 import com.example.tourism_app.databinding.FragmentHomeBinding
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
 class HomeFragment : Fragment() {
 
@@ -24,9 +22,12 @@ class HomeFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
     private lateinit var activityRecyclerView : RecyclerView
     private lateinit var activityList : ArrayList<Activity>
 
+    private lateinit var categoryList : ArrayList<Category>
+    private lateinit var categoryRecyclerView : RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,6 +40,7 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        // getting values for the Activity recycler view
         activityRecyclerView = binding.activityList
         activityRecyclerView.layoutManager = LinearLayoutManager(this.context,
                                                                 LinearLayoutManager.HORIZONTAL,
@@ -47,6 +49,16 @@ class HomeFragment : Fragment() {
         // initializing the list of activities
         activityList = arrayListOf<Activity>()
         getActivityData()
+
+        // getting values for the Category recycler view
+        categoryRecyclerView = binding.categoryList
+        categoryRecyclerView.layoutManager = LinearLayoutManager(this.context,
+            LinearLayoutManager.HORIZONTAL,
+            false)
+
+        // initializing the list of categories
+        categoryList = arrayListOf<Category>()
+        getCategoryData()
 
         return root
     }
@@ -73,5 +85,20 @@ class HomeFragment : Fragment() {
         }
 
         activityRecyclerView.adapter = ActivityRecyclerAdapter(activityList)
+    }
+
+    private fun getCategoryData() {
+        val categories = listOf(
+            Category(resources.getStringArray(R.array.categories)[0], R.drawable.category_aesthetics),
+            Category(resources.getStringArray(R.array.categories)[1], R.drawable.category_event),
+            Category(resources.getStringArray(R.array.categories)[2], R.drawable.category_garden),
+            Category(resources.getStringArray(R.array.categories)[3], R.drawable.category_museum)
+        )
+
+        for (element in categories) {
+            categoryList.add(element)
+        }
+
+        categoryRecyclerView.adapter = CategoryAdapter(categoryList)
     }
 }
