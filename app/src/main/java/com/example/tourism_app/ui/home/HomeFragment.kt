@@ -14,6 +14,7 @@ import com.example.tourism_app.Category
 import com.example.tourism_app.CategoryAdapter
 import com.example.tourism_app.R
 import com.example.tourism_app.databinding.FragmentHomeBinding
+import com.google.android.material.tabs.TabLayout
 
 class HomeFragment : Fragment() {
 
@@ -29,16 +30,21 @@ class HomeFragment : Fragment() {
     private lateinit var categoryList : ArrayList<Category>
     private lateinit var categoryRecyclerView : RecyclerView
 
+    private lateinit var tabLayout : TabLayout
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+            ViewModelProvider(this)[HomeViewModel::class.java]
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        tabLayout = binding.activityTabs
+        tabLayout.getTabAt(1)?.select()
+        // activityLayoutListenerInit()
 
         // getting values for the Activity recycler view
         activityRecyclerView = binding.activityList
@@ -47,7 +53,7 @@ class HomeFragment : Fragment() {
                                                                 false)
 
         // initializing the list of activities
-        activityList = arrayListOf<Activity>()
+        activityList = arrayListOf()
         getActivityData()
 
         // getting values for the Category recycler view
@@ -57,7 +63,7 @@ class HomeFragment : Fragment() {
             false)
 
         // initializing the list of categories
-        categoryList = arrayListOf<Category>()
+        categoryList = arrayListOf()
         getCategoryData()
 
         return root
@@ -100,5 +106,22 @@ class HomeFragment : Fragment() {
         }
 
         categoryRecyclerView.adapter = CategoryAdapter(categoryList)
+    }
+
+    private fun activityLayoutListenerInit(){
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                // Handle tab selection, filter the list accordingly
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                // Handle tab unselection if needed
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                // Handle tab reselection if needed
+            }
+        })
+
     }
 }

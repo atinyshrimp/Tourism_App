@@ -14,7 +14,7 @@
     <string name="popularFilter">Popular</string>
     <string name="recommendedFilter">Recommended</string>
     <string name="visitedFilter">Most visited</string>
-    <string name="searchPlaceholder">Discover a place...</string>
+    <string name="searchPlaceholder">Discover a place…</string>
     <string name="btnAll">View all</string>
     <string-array name="categories">
         <item>Aesthetics</item>

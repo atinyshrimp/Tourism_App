@@ -1,6 +1,5 @@
 package com.example.tourism_app
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,13 +11,13 @@ class CategoryAdapter (private val categoryList: ArrayList<Category>) : Recycler
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): CategoryAdapter.MyViewHolder {
+    ): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.category_card, parent,
             false)
         return MyViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: CategoryAdapter.MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = categoryList[position]
 
         holder.image.setImageResource(currentItem.imageId!!)

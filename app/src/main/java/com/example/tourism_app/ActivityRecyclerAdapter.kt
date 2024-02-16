@@ -13,14 +13,14 @@ class ActivityRecyclerAdapter(private val activityList: ArrayList<Activity>) : R
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ActivityRecyclerAdapter.MyViewHolder {
+    ): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.activity_card, parent,
                                                                     false)
         return MyViewHolder(itemView)
     }
 
     @SuppressLint("SetTextI18n")
-    override fun onBindViewHolder(holder: ActivityRecyclerAdapter.MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = activityList[position]
 
         holder.name.text = currentItem.name
