@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.Tourism_App" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
@@ -27,5 +27,9 @@
     <style name="tab_appearance">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/gold</item>
+    </style>
+
+    <style name="landmark_button">
+        <item name="android:background">@color/gold</item>
     </style>
 </resources>

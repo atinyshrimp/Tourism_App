@@ -8,12 +8,13 @@
     <string name="greetings">Welcome back,</string>
     <string name="username">Jane Doe!</string>
     <string name="popCategories">Popular Categories</string>
+    <string name="category">Category</string>
     <string name="activity_heading">Venture easily in Paris!</string>
     <string name="allFilter">All</string>
     <string name="popularFilter">Popular</string>
     <string name="recommendedFilter">Recommended</string>
     <string name="visitedFilter">Most visited</string>
-    <string name="searchPlaceholder">Discover a place...</string>
+    <string name="searchPlaceholder">Discover a place…</string>
     <string name="btnAll">View all</string>
     <string-array name="categories">
         <item>Aesthetics</item>
@@ -21,4 +22,10 @@
         <item>Garden</item>
         <item>Museum</item>
     </string-array>
+
+    <string name="landmarkBtn">Mark the landmark as visited</string>
+    <string name="detailOverview">Overview</string>
+    <string name="detailHistory">History</string>
+    <string name="detailConditions">Conditions</string>
+    <string name="detailTransport">Transport</string>
 </resources>
