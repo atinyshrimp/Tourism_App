@@ -1,4 +1,4 @@
-package com.example.tourism_app
+package com.example.tourism_app.data
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,13 +6,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.tourism_app.R
 
 class CategoryAdapter (private val categoryList: ArrayList<Category>) : RecyclerView.Adapter<CategoryAdapter.MyViewHolder>(){
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): MyViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.category_card, parent,
+        val itemView = LayoutInflater.from(parent.context).inflate(
+            R.layout.category_card, parent,
             false)
         return MyViewHolder(itemView)
     }
