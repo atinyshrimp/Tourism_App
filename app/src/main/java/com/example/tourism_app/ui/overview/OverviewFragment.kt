@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.tourism_app.data.Activity
 import com.example.tourism_app.databinding.FragmentOverviewBinding
 
-class OverviewFragment(activity: Activity): Fragment() {
+class OverviewFragment(private val activity: Activity): Fragment() {
 
     private var _binding: FragmentOverviewBinding ?= null
     private val binding get() = _binding!!
@@ -26,10 +26,9 @@ class OverviewFragment(activity: Activity): Fragment() {
         _binding = FragmentOverviewBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textOverview
-        overviewViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+        overviewViewModel.setupModel(binding, activity)
+        overviewViewModel.setupViews(this)
+
         return root
     }
 

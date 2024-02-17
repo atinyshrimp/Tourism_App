@@ -13,6 +13,7 @@ import com.google.android.material.tabs.TabLayout
 
 class DetailsActivity: AppCompatActivity() {
     private lateinit var binding: DetailsActivityBinding
+    private lateinit var currentActivity: Activity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,10 +21,11 @@ class DetailsActivity: AppCompatActivity() {
         binding = DetailsActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val currentActivity: Activity? = intent.getParcelableExtra("activityKey")
-        setupPage(currentActivity!!)
+        // getting the Activity from the RecyclerView item
+        currentActivity = intent.getParcelableExtra("activityKey")!!
+        setupPage()
 
-
+        // default fragment is "Overview"
         replaceFragment(OverviewFragment(currentActivity))
 
         // setting up the back button
@@ -64,7 +66,7 @@ class DetailsActivity: AppCompatActivity() {
         fragmentTransaction.commit()
     }
 
-    private fun setupPage(currentActivity: Activity) {
+    private fun setupPage() {
         binding.tvActName.text = currentActivity.name
         binding.tvActCategory.text = currentActivity.category
         binding.tvActLocation.text = "Paris ${currentActivity.getArrondissement()}"
