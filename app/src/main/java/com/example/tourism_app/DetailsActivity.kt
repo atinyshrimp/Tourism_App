@@ -1,11 +1,13 @@
 package com.example.tourism_app
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.tourism_app.data.Activity
 import com.example.tourism_app.databinding.DetailsActivityBinding
 import com.example.tourism_app.ui.dashboard.DashboardFragment
+import com.example.tourism_app.ui.history.HistoryFragment
 import com.example.tourism_app.ui.notifications.NotificationsFragment
 import com.example.tourism_app.ui.overview.OverviewFragment
 import com.example.tourism_app.ui.profile.ProfileFragment
@@ -38,7 +40,7 @@ class DetailsActivity: AppCompatActivity() {
                 tab?.let {
                     when(it.position) {
                         0 -> replaceFragment(OverviewFragment(currentActivity))
-                        1 -> replaceFragment(ProfileFragment())
+                        1 -> replaceFragment(HistoryFragment(currentActivity))
                         2 -> replaceFragment(NotificationsFragment())
                         3 -> replaceFragment(DashboardFragment())
 
@@ -66,6 +68,7 @@ class DetailsActivity: AppCompatActivity() {
         fragmentTransaction.commit()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setupPage() {
         binding.tvActName.text = currentActivity.name
         binding.tvActCategory.text = currentActivity.category
