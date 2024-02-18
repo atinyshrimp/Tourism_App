@@ -5,13 +5,16 @@
     android:layout_width="185dp"
     android:layout_height="210dp"
     android:layout_marginEnd="25dp"
-    app:cardBackgroundColor="@color/half_gold"
+    android:clipToPadding="false"
+    android:background="@drawable/card_background"
     app:cardCornerRadius="20dp"
-    app:cardElevation="0dp">
+    app:cardElevation="3dp"
+    android:padding="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/half_gold">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
@@ -130,6 +133,8 @@
             android:src="@drawable/ic_heart_black_24dp"
             android:focusable="true"
             android:clickable="true"
+            android:stateListAnimator="@null"
+            android:elevation="3dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
 
