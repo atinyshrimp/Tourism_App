@@ -54,7 +54,7 @@ class Login : AppCompatActivity() {
                     }
                     if (isUserFound) {
                         Toast.makeText(applicationContext, "Login Successful", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this@Login, MainActivity2::class.java)
+                        val intent = Intent(this@Login, MainActivity::class.java)
                         startActivity(intent)
                     } else {
                         Toast.makeText(applicationContext, "Wrong password or username", Toast.LENGTH_SHORT).show()
