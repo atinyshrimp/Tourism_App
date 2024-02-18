@@ -12,54 +12,54 @@
         android:layout_marginTop="100dp"
         tools:context=".Login">
 
-        <Button
-            android:id="@+id/usernameButton"
+        <EditText
+            android:id="@+id/usernameTxtR"
             android:layout_width="300dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
             android:textSize="25sp"
-            android:text="Username" />
+            android:hint="Username" />
 
-        <Button
-            android:id="@+id/emailButton"
+        <EditText
+            android:id="@+id/emailTxtR"
             android:layout_width="300dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:textSize="25sp"
-            android:text="Password" />
-        <Button
-            android:id="@+id/passwordButton"
+            android:hint="Email" />
+        <EditText
+            android:id="@+id/passwordTxtR"
             android:layout_width="300dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:textSize="25sp"
-            android:text="Password" />
-        <Button
-            android:id="@+id/passwordConfButton"
+            android:hint="Password" />
+        <EditText
+            android:id="@+id/passwordConfTxtR"
             android:layout_width="300dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:textSize="25sp"
-            android:text="Password" />
+            android:hint="Confirm password" />
         <Button
-            android:id="@+id/loginButton"
+            android:id="@+id/registerButtonR"
             android:layout_width="250dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:textSize="25sp"
-            android:text="Login" />
+            android:text="Register" />
 
         <Button
-            android:id="@+id/registerButton"
+            android:id="@+id/loginButtonR"
             android:layout_width="200dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:text="Register" />
+            android:text="Login" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

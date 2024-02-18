@@ -12,26 +12,26 @@
         android:orientation="vertical"
         tools:context=".Login">
 
-        <Button
-            android:id="@+id/usernameButton"
+        <EditText
+            android:id="@+id/usernameTextL"
             android:layout_width="300dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
             android:layout_marginTop="200dp"
             android:textSize="25sp"
-            android:text="Username" />
+            android:hint="Username" />
 
-        <Button
-            android:id="@+id/passwordButton"
+        <EditText
+            android:id="@+id/passwordTextL"
             android:layout_width="300dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:textSize="25sp"
-            android:text="Password" />
+            android:hint="Password" />
 
         <Button
-            android:id="@+id/loginButton"
+            android:id="@+id/loginButtonL"
             android:layout_width="250dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
@@ -40,7 +40,7 @@
             android:text="Login" />
 
         <Button
-            android:id="@+id/registerButton"
+            android:id="@+id/registerButtonL"
             android:layout_width="200dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
