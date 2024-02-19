@@ -8,7 +8,6 @@ import com.example.tourism_app.ui.dashboard.DashboardFragment
 import com.example.tourism_app.ui.home.HomeFragment
 import com.example.tourism_app.ui.notifications.NotificationsFragment
 import com.example.tourism_app.ui.profile.ProfileFragment
-import com.google.firebase.database.FirebaseDatabase
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,7 +18,6 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true)
 
         // default fragment is Home
         replaceFragment(HomeFragment())
