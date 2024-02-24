@@ -8,10 +8,12 @@ import com.example.tourism_app.ui.dashboard.DashboardFragment
 import com.example.tourism_app.ui.home.HomeFragment
 import com.example.tourism_app.ui.notifications.NotificationsFragment
 import com.example.tourism_app.ui.profile.ProfileFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMain2Binding
+    lateinit var navbarView: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +24,8 @@ class MainActivity : AppCompatActivity() {
         // default fragment is Home
         replaceFragment(HomeFragment())
 
-        binding.navView.setOnItemSelectedListener {
+        navbarView = binding.navView
+        navbarView.setOnItemSelectedListener {
             when(it.itemId) {
                 R.id.navigation_home -> replaceFragment(HomeFragment())
                 R.id.navigation_dashboard -> replaceFragment(DashboardFragment())

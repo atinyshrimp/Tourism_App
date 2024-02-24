@@ -5,16 +5,19 @@ import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tourism_app.DetailsActivity
+import com.example.tourism_app.MainActivity
 import com.example.tourism_app.data.Activity
 import com.example.tourism_app.data.ActivityRecyclerAdapter
 import com.example.tourism_app.data.Category
 import com.example.tourism_app.data.CategoryAdapter
 import com.example.tourism_app.R
 import com.example.tourism_app.databinding.FragmentHomeBinding
+import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.tabs.TabLayout
 
 class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent {
 
+    private lateinit var binding: FragmentHomeBinding
     private lateinit var activityList: ArrayList<Activity>
     private lateinit var fragment: HomeFragment
 
@@ -25,6 +28,7 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
 
     fun setupViews(binding: FragmentHomeBinding, homeFragment: HomeFragment) {
         fragment = homeFragment
+        this.binding = binding
 
         // Access UI components and perform setup
         val tabLayout = binding.activityTabs
@@ -48,12 +52,15 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
 
         // initializing the list of categories
         val categoryList = arrayListOf<Category>()
-        getCategoryData(fragment, categoryList, categoryRecyclerView)
+        getCategoryData(categoryList, categoryRecyclerView)
+
+        // make the user pic lead to Profile Fragment
+        setupUserPicInteractivity()
 
         // setupTabs(tabLayout)
     }
 
-    fun setupTabs(tabLayout: TabLayout) {
+    private fun setupTabs(tabLayout: TabLayout) {
         // Setup listeners or event handling if needed
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -68,7 +75,6 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
                 // Handle tab reselection if needed
             }
         })
-
     }
 
     private fun getActivityData(activityList: ArrayList<Activity>, activityRecyclerView: RecyclerView) {
@@ -77,10 +83,10 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
         val activities = listOf(
             Activity(name="Musée du Louvre", address="8 rue Sainte-Anne, 75001 Paris",
                 description = "Experience the Louvre, the world's largest and most visited art museum, nestled in the heart of Paris. Home to over 35,000 works of art spanning from ancient civilizations to the 19th century, this iconic institution showcases the pinnacle of human creativity. Marvel at renowned masterpieces, including Leonardo da Vinci's Mona Lisa, the ancient Greek sculpture Venus de Milo, and the striking Winged Victory of Samothrace. The Louvre's architectural grandeur, from the medieval fortress to the glass pyramid entrance, adds to the allure of this cultural gem. Dive into a rich tapestry of history and artistry as you explore the Louvre's vast collections, making it an essential destination for any art and history enthusiast.",
-                transport = null, hours="09:00 - 18:00", category="Museum"),
+                condition_free = "everyone under 18yo and every EU resident under 26yo", hours="09:00 - 18:00", category="Museum"),
             Activity(name="Parc des Buttes-Chaumont", address="1 Rue Botzaris, 75019 Paris",
                 description = "A beautiful public park with hills, bridges, and a lake.",
-                transport = null, hours="07:00 - 22:00", category="Garden")
+                condition_free = "For everyone", hours="07:00 - 22:00", category="Garden")
         )
 
         for (element in activities) {
@@ -90,8 +96,7 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
         activityRecyclerView.adapter = ActivityRecyclerAdapter(activityList, this)
     }
 
-    private fun getCategoryData(fragment: HomeFragment,
-                                categoryList: ArrayList<Category>,
+    private fun getCategoryData(categoryList: ArrayList<Category>,
                                 categoryRecyclerView: RecyclerView) {
         val categories = listOf(
             Category(fragment.resources.getStringArray(R.array.categories)[0], R.drawable.category_aesthetics),
@@ -111,5 +116,14 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
         val intent = Intent(fragment.context, DetailsActivity::class.java)
         intent.putExtra("activityKey", activity)
         fragment.context?.startActivity(intent)
+    }
+
+    private fun setupUserPicInteractivity() {
+        val userPicBtn: ShapeableImageView = binding.ivUser
+        val parentAct: MainActivity = fragment.activity as MainActivity
+
+        userPicBtn.setOnClickListener {
+            parentAct.navbarView.selectedItemId = R.id.navigation_profile
+        }
     }
 }
