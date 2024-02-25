@@ -33,11 +33,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/ivUser"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_weight="0"
             android:padding="1dp"
+            android:focusable="true"
+            android:clickable="true"
             app:shapeAppearanceOverlay="@style/circular_icon"
             app:srcCompat="@drawable/uifaces_popular_image"
             app:strokeColor="@color/gold"

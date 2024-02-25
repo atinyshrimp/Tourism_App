@@ -8,11 +8,13 @@ data class Activity(
     val name : String ?= null,
     var address: String? = null,
     var description: String? = null,
+    var condition_free: String? = null,
     var transport: List<List<String>> ?= null,
     var hours: String? = null,
     var category: String ?= null
 ): Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -25,6 +27,7 @@ data class Activity(
         parcel.writeString(name)
         parcel.writeString(address)
         parcel.writeString(description)
+        parcel.writeString(condition_free)
         parcel.writeStringList(transport?.flatten())
         parcel.writeString(hours)
         parcel.writeString(category)

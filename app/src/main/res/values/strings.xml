@@ -28,4 +28,6 @@
     <string name="detailHistory">History</string>
     <string name="detailConditions">Conditions</string>
     <string name="detailTransport">Transport</string>
+
+    <string name="conditions">The activity is free if you check ONE of these conditions:</string>
 </resources>
