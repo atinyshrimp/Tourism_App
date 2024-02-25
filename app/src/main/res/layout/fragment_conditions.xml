@@ -32,6 +32,16 @@
             app:layout_constraintStart_toStartOf="@+id/tvConditions"
             app:layout_constraintTop_toBottomOf="@+id/tvConditions" />
 
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/info"
+            android:textColor="@color/gold"
+            app:layout_constraintStart_toStartOf="@+id/tvConditions"
+            app:layout_constraintTop_toBottomOf="@+id/rvConditions" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

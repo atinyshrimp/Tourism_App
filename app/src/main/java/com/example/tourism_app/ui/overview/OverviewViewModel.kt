@@ -1,7 +1,9 @@
 package com.example.tourism_app.ui.overview
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.text.Html
 import android.view.LayoutInflater
 import android.widget.TextView
@@ -21,34 +23,13 @@ class OverviewViewModel: ViewModel() {
     fun setupModel(binding: FragmentOverviewBinding, activity: Activity) {
         currentActivity = activity
         this.binding = binding
+
+        setupViews()
     }
 
-    fun setupViews(fragment: OverviewFragment) {
-        binding.tvAddress.text = currentActivity.address
-        val todaySchedule = currentActivity.getTodaySchedule()
-        if (todaySchedule != "closed") {
-            binding.tvHours.text = todaySchedule
-        } else {
-            binding.tvHours.text = ""
-        }
-
-        // make "Show Details" clickable
-        val detailsBtn = binding.tvHourDetails
-        detailsBtn.setOnClickListener {
-            displaySchedulesToast(fragment.requireContext(), currentActivity)
-        }
-
-        setupStatus(fragment)
-    }
-
-    private fun getCurrentDay(): String {
-        val calendar = Calendar.getInstance()
-        val simpleDateFormat = SimpleDateFormat("EEEE", Locale.getDefault())
-        return simpleDateFormat.format(calendar.time)
-    }
-
-
-    private fun displaySchedulesToast(context: Context, activity: Activity) {
+    @SuppressLint("SetTextI18n")
+    private fun displaySchedules() {
+        val context = binding.root.context
         val currentDay = getCurrentDay()
         val dialogView = LayoutInflater.from(context).inflate(R.layout.details_card, null)
         val titleTextView: TextView = dialogView.findViewById(R.id.tvActivityName)
@@ -57,7 +38,7 @@ class OverviewViewModel: ViewModel() {
         val scheduleText = StringBuilder()
 
         // Build the schedule text with all days
-        activity.hours?.let { hours ->
+        currentActivity.hours?.let { hours ->
             for (day in listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")) {
                 val schedule = when (day) {
                     "Monday" -> hours.monday
@@ -94,10 +75,19 @@ class OverviewViewModel: ViewModel() {
         val dialog = builder.create()
 
         // Show the dialog
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
     }
 
-    private fun setupStatus(fragment: OverviewFragment){
+    private fun getCurrentDay(): String {
+        val calendar = Calendar.getInstance()
+        val simpleDateFormat = SimpleDateFormat("EEEE", Locale.getDefault())
+        return simpleDateFormat.format(calendar.time)
+    }
+
+    private fun setupStatus(){
+        val context = binding.root.context
+
         // Get the current time
         val calendar: Calendar = Calendar.getInstance()
         val currentHour: Int = calendar.get(Calendar.HOUR_OF_DAY)
@@ -137,22 +127,44 @@ class OverviewViewModel: ViewModel() {
                 currentTimeInMinutes < endTimeInMinutes - bufferTime
             ) {
                 status.text = "Open"
-                status.setTextColor(ContextCompat.getColor(fragment.requireContext(), R.color.olympic_green))
+                status.setTextColor(ContextCompat.getColor(context, R.color.olympic_green))
             } else {
                 // Check if the current time is nearer the start
                 if (currentTimeInMinutes > endTimeInMinutes - bufferTime && currentTimeInMinutes < endTimeInMinutes) {
                     status.text = "Closes soon"
-                    status.setTextColor(ContextCompat.getColor(fragment.requireContext(), R.color.olympic_yellow))
+                    status.setTextColor(ContextCompat.getColor(context, R.color.olympic_yellow))
                 }
                 else if (currentTimeInMinutes >= startTimeInMinutes - bufferTime && currentTimeInMinutes < startTimeInMinutes) {
                     status.text = "Opens soon"
-                    status.setTextColor(ContextCompat.getColor(fragment.requireContext(), R.color.olympic_yellow))
+                    status.setTextColor(ContextCompat.getColor(context, R.color.olympic_yellow))
                 }  else {
                     status.text = "Closed"
-                    status.setTextColor(ContextCompat.getColor(fragment.requireContext(), R.color.olympic_pink))
+                    status.setTextColor(ContextCompat.getColor(context, R.color.olympic_pink))
                 }
             }
         }
 
+    }
+
+    private fun setupViews() {
+        binding.tvAddress.text = currentActivity.address
+        val todaySchedule = currentActivity.getTodaySchedule()
+        if (todaySchedule != "closed") {
+            binding.tvHours.text = todaySchedule
+        } else {
+            binding.tvHours.text = ""
+        }
+
+        // make "Show Details" clickable
+        val detailsBtn = binding.tvHourDetails
+        detailsBtn.setOnClickListener {
+            displaySchedules()
+        }
+
+        setupStatus()
+
+        // setting the activity's URL
+        val info: TextView = binding.textView8
+        currentActivity.makeTextViewClickable(info, binding.root.context)
     }
 }

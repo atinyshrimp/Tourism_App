@@ -1,7 +1,18 @@
 package com.example.tourism_app.data
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
+import android.text.SpannableString
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.view.View
+import android.widget.TextView
+import androidx.core.content.ContextCompat
+import com.example.tourism_app.R
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -67,12 +78,6 @@ data class Activity(
         }
     }
 
-    private fun getCurrentDay(): String {
-        val calendar = Calendar.getInstance()
-        val simpleDateFormat = SimpleDateFormat("EEEE", Locale.getDefault())
-        return simpleDateFormat.format(calendar.time)
-    }
-
     fun getArrondissement(): String? {
         val pattern = Regex("\\b750(\\d{2})\\b")
         val matchResult = pattern.find(address.toString())
@@ -87,6 +92,34 @@ data class Activity(
         }
     }
 
+    fun makeTextViewClickable(textView: TextView, context: Context) {
+        if (url != null) {
+            val clickableSpan = object : ClickableSpan() {
+                override fun onClick(widget: View) {
+                    openUrl(context)
+                }
+
+                override fun updateDrawState(ds: TextPaint) {
+                    super.updateDrawState(ds)
+                    ds.color = ContextCompat.getColor(context, R.color.gold)
+                    ds.isUnderlineText = true
+                }
+            }
+
+            val spannable = SpannableString(textView.text)
+            spannable.setSpan(clickableSpan, 0, spannable.length, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+            textView.text = spannable
+            textView.movementMethod = LinkMovementMethod.getInstance()
+        }
+    }
+
+    private fun getCurrentDay(): String {
+        val calendar = Calendar.getInstance()
+        val simpleDateFormat = SimpleDateFormat("EEEE", Locale.getDefault())
+        return simpleDateFormat.format(calendar.time)
+    }
+
     private fun getOrdinalSuffix(number: Int): String {
         return when {
             number in 11..13 -> "th"
@@ -95,6 +128,11 @@ data class Activity(
             number % 10 == 3 -> "rd"
             else -> "th"
         }
+    }
+
+    private fun openUrl(context: Context) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        context.startActivity(intent)
     }
 }
 

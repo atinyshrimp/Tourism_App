@@ -17,5 +17,8 @@ class HistoryViewModel: ViewModel() {
 
     private fun setupViews() {
         binding.tvDescription.text = currentActivity.reason
+
+        // setting the activity's URL
+        currentActivity.makeTextViewClickable(binding.textView5, binding.root.context)
     }
 }
