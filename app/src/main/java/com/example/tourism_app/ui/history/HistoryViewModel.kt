@@ -16,6 +16,6 @@ class HistoryViewModel: ViewModel() {
     }
 
     private fun setupViews() {
-        binding.tvDescription.text = currentActivity.description
+        binding.tvDescription.text = currentActivity.reason
     }
 }

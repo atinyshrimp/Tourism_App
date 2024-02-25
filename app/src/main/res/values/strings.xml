@@ -30,4 +30,6 @@
     <string name="detailTransport">Transport</string>
 
     <string name="conditions">The activity is free if you check ONE of these conditions:</string>
+
+    <string name="schedule">Weekly schedule:</string>
 </resources>

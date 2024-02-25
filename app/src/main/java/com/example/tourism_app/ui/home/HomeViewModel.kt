@@ -11,6 +11,7 @@ import com.example.tourism_app.data.ActivityRecyclerAdapter
 import com.example.tourism_app.data.Category
 import com.example.tourism_app.data.CategoryAdapter
 import com.example.tourism_app.R
+import com.example.tourism_app.data.Hours
 import com.example.tourism_app.databinding.FragmentHomeBinding
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.tabs.TabLayout
@@ -82,11 +83,29 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
         // test Activity elements until Firebase liaison
         val activities = listOf(
             Activity(name="Musée du Louvre", address="8 rue Sainte-Anne, 75001 Paris",
-                description = "Experience the Louvre, the world's largest and most visited art museum, nestled in the heart of Paris. Home to over 35,000 works of art spanning from ancient civilizations to the 19th century, this iconic institution showcases the pinnacle of human creativity. Marvel at renowned masterpieces, including Leonardo da Vinci's Mona Lisa, the ancient Greek sculpture Venus de Milo, and the striking Winged Victory of Samothrace. The Louvre's architectural grandeur, from the medieval fortress to the glass pyramid entrance, adds to the allure of this cultural gem. Dive into a rich tapestry of history and artistry as you explore the Louvre's vast collections, making it an essential destination for any art and history enthusiast.",
-                condition_free = "everyone under 18yo and every EU resident under 26yo", hours="09:00 - 18:00", category="Museum"),
+                reason = "Experience the Louvre, the world's largest and most visited art museum, nestled in the heart of Paris. Home to over 35,000 works of art spanning from ancient civilizations to the 19th century, this iconic institution showcases the pinnacle of human creativity. Marvel at renowned masterpieces, including Leonardo da Vinci's Mona Lisa, the ancient Greek sculpture Venus de Milo, and the striking Winged Victory of Samothrace. The Louvre's architectural grandeur, from the medieval fortress to the glass pyramid entrance, adds to the allure of this cultural gem. Dive into a rich tapestry of history and artistry as you explore the Louvre's vast collections, making it an essential destination for any art and history enthusiast.",
+                condition_free = "everyone under 18yo and every EU resident under 26yo",
+                hours = Hours(
+                    monday = "09:00 - 18:00",
+                    tuesday = "closed",
+                    wednesday = "09:00 - 18:00",
+                    thursday = "09:00 - 18:00",
+                    friday = "09:00 - 21:45",
+                    saturday = "09:00 - 18:00",
+                    sunday = "09:00 - 18:00"),
+                category="Museum"),
             Activity(name="Parc des Buttes-Chaumont", address="1 Rue Botzaris, 75019 Paris",
-                description = "A beautiful public park with hills, bridges, and a lake.",
-                condition_free = "For everyone", hours="07:00 - 22:00", category="Garden")
+                reason = "A beautiful public park with hills, bridges, and a lake.",
+                condition_free = "For everyone",
+                hours=Hours(
+                    monday = "07:00 - 20:00",
+                    tuesday = "07:00 - 20:00",
+                    wednesday = "07:00 - 20:00",
+                    thursday = "07:00 - 20:00",
+                    friday = "07:00 - 20:00",
+                    saturday = "07:00 - 20:00",
+                    sunday = "07:00 - 20:00"),
+                category="Garden")
         )
 
         for (element in activities) {
