@@ -14,12 +14,15 @@ import com.example.tourism_app.R
 import com.example.tourism_app.databinding.FragmentHomeBinding
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var activityList: ArrayList<Activity>
     private lateinit var fragment: HomeFragment
+    private lateinit var database: DatabaseReference
 
     override fun onItemClick(position: Int) {
         val activity = activityList[position]
@@ -79,6 +82,7 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
 
     private fun getActivityData(activityList: ArrayList<Activity>, activityRecyclerView: RecyclerView) {
 
+        //readData()
         // test Activity elements until Firebase liaison
         val activities = listOf(
             Activity(name="Musée du Louvre", address="8 rue Sainte-Anne, 75001 Paris",
@@ -89,11 +93,41 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
                 condition_free = "For everyone", hours="07:00 - 22:00", category="Garden")
         )
 
+
+
         for (element in activities) {
             activityList.add(element)
         }
 
         activityRecyclerView.adapter = ActivityRecyclerAdapter(activityList, this)
+    }
+
+    private fun readData() {
+        var bool: Boolean = true
+        var lieu: String = "Lieu"
+        var i: Int =0
+        database = FirebaseDatabase.getInstance().getReference("Lieu")
+        while(bool){
+            database.child(lieu.plus(i)).get().addOnSuccessListener {
+                if(it.exists()){
+                    val name = it.child("name").value
+                    val address = it.child("address").value
+                    val description = it.child("description").value
+                    val condition_free = it.child("condition_free").value
+                    val hours = it.child("hours").child("friday").value
+                    val category = it.child("category").value
+                    //activityList.add(Activity(name=name.toString(),address=address.toString(), ))
+
+                }
+                else{
+                    bool = false
+                }
+            }.addOnFailureListener{
+                bool = false
+            }
+            i++
+        }
+
     }
 
     private fun getCategoryData(categoryList: ArrayList<Category>,
