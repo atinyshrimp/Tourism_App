@@ -24,7 +24,7 @@ data class Activity(
     var condition_free: String? = null,
     var hours: Hours? = null,
     var name: String? = null,
-    var reason: String? = null,
+    var description: String? = null,
     var transport: Transport? = null,
     var url: String? = null
 ): Parcelable {
@@ -45,7 +45,7 @@ data class Activity(
         parcel.writeString(condition_free)
         parcel.writeParcelable(hours, flags)
         parcel.writeString(name)
-        parcel.writeString(reason)
+        parcel.writeString(description)
         parcel.writeParcelable(transport, flags)
         parcel.writeString(url)
     }
