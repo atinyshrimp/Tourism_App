@@ -32,4 +32,12 @@
     <string name="conditions">The activity is free if you check ONE of these conditions:</string>
 
     <string name="schedule">Weekly schedule:</string>
+
+    <string name="transportSubway">Subways</string>
+    <string name="transportRER">RER</string>
+    <string name="transportTrain">Trains</string>
+    <string name="transportBus">Buses</string>
+    <string name="transportParking">Parking lots nearby</string>
+
+    <string name="info">More information</string>
 </resources>

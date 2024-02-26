@@ -26,7 +26,7 @@ class ConditionsFragment(
         _binding = FragmentConditionsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        conditionsViewModel.setupModel(binding, activity, this)
+        conditionsViewModel.setupModel(binding, activity)
 
         return root
     }

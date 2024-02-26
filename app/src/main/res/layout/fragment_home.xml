@@ -121,6 +121,7 @@
             android:id="@+id/activityTabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             app:tabIndicatorAnimationMode="elastic"
             app:tabIndicatorColor="@color/gold"
             app:tabMode="scrollable">

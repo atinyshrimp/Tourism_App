@@ -10,12 +10,10 @@ import com.example.tourism_app.databinding.FragmentConditionsBinding
 class ConditionsViewModel : ViewModel() {
     private lateinit var currentActivity: Activity
     private lateinit var binding: FragmentConditionsBinding
-    private lateinit var fragment: ConditionsFragment
 
-    fun setupModel(binding: FragmentConditionsBinding, activity: Activity, fragment: ConditionsFragment) {
+    fun setupModel(binding: FragmentConditionsBinding, activity: Activity) {
         currentActivity = activity
         this.binding = binding
-        this.fragment = fragment
 
         setupViews()
     }
@@ -23,9 +21,12 @@ class ConditionsViewModel : ViewModel() {
     private fun setupViews() {
         // initializing list of conditions
         val recyclerView = binding.rvConditions
-        recyclerView.layoutManager = LinearLayoutManager(fragment.context,
+        recyclerView.layoutManager = LinearLayoutManager(binding.root.context,
             LinearLayoutManager.VERTICAL, false)
         getConditions(recyclerView)
+
+        // setting the activity's URL
+        currentActivity.makeTextViewClickable(binding.textView2, binding.root.context)
     }
 
     private fun getListFromString(): ArrayList<String> {

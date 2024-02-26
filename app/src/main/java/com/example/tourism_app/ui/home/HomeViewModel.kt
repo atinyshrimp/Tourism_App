@@ -98,7 +98,8 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
                     friday = "09:00 - 21:45",
                     saturday = "09:00 - 18:00",
                     sunday = "09:00 - 18:00"),
-                category="Museum"),
+                category="Museum",
+                url = "https://www.louvre.fr/"),
             Activity(name="Parc des Buttes-Chaumont", address="1 Rue Botzaris, 75019 Paris",
                 reason = "A beautiful public park with hills, bridges, and a lake.",
                 condition_free = "For everyone",
@@ -110,7 +111,8 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
                     friday = "07:00 - 20:00",
                     saturday = "07:00 - 20:00",
                     sunday = "07:00 - 20:00"),
-                category="Garden")
+                category="Garden",
+                url = "https://www.paris.fr/lieux/parc-des-buttes-chaumont-1757")
         )
 
         for (element in activities) {
