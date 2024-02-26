@@ -1,6 +1,7 @@
 package com.example.tourism_app.ui.home
 
 import android.content.Intent
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -82,9 +83,9 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
     }
 
     private fun getActivityData(activityList: ArrayList<Activity>, activityRecyclerView: RecyclerView) {
-
-        //readData()
-        // test Activity elements until Firebase liaison
+        readData()
+/*
+         // test Activity elements until Firebase liaison
         val activities = listOf(
             Activity(name="Musée du Louvre", address="8 rue Sainte-Anne, 75001 Paris",
                 reason = "Experience the Louvre, the world's largest and most visited art museum, nestled in the heart of Paris. Home to over 35,000 works of art spanning from ancient civilizations to the 19th century, this iconic institution showcases the pinnacle of human creativity. Marvel at renowned masterpieces, including Leonardo da Vinci's Mona Lisa, the ancient Greek sculpture Venus de Milo, and the striking Winged Victory of Samothrace. The Louvre's architectural grandeur, from the medieval fortress to the glass pyramid entrance, adds to the allure of this cultural gem. Dive into a rich tapestry of history and artistry as you explore the Louvre's vast collections, making it an essential destination for any art and history enthusiast.",
@@ -112,30 +113,38 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
                 category="Garden")
         )
 
-
-
         for (element in activities) {
             activityList.add(element)
-        }
+        }*/
 
         activityRecyclerView.adapter = ActivityRecyclerAdapter(activityList, this)
     }
 
     private fun readData() {
-        var bool: Boolean = true
-        var lieu: String = "Lieu"
-        var i: Int =0
+        var bool = true
+        val lieu = "Lieu"
+        var i = 1
         database = FirebaseDatabase.getInstance().getReference("Lieu")
-        while(bool){
+        while(i<3){
             database.child(lieu.plus(i)).get().addOnSuccessListener {
                 if(it.exists()){
                     val name = it.child("name").value
                     val address = it.child("address").value
                     val description = it.child("description").value
                     val condition_free = it.child("condition_free").value
-                    val hours = it.child("hours").child("friday").value
+                    val monday = it.child("hours").child("monday").value
+                    val tuesday = it.child("hours").child("tuesday").value
+                    val wednesday = it.child("hours").child("wednesday").value
+                    val thursday = it.child("hours").child("thursday").value
+                    val friday = it.child("hours").child("friday").value
+                    val saturday = it.child("hours").child("saturday").value
+                    val sunday = it.child("hours").child("sunday").value
+                    val hours = Hours(monday=monday.toString(), tuesday=tuesday.toString(),wednesday=wednesday.toString(), thursday=thursday.toString(), friday=friday.toString(),saturday=saturday.toString(), sunday=sunday.toString())
+
                     val category = it.child("category").value
-                    //activityList.add(Activity(name=name.toString(),address=address.toString(), ))
+                    val url = it.child("url").value
+
+                    activityList.add(Activity(address=address.toString(),category=category.toString(), condition_free = condition_free.toString(),hours=hours, name=name.toString(),reason = description.toString() ,url = url.toString() ))
 
                 }
                 else{
