@@ -16,6 +16,7 @@ import com.example.tourism_app.data.Hours
 import com.example.tourism_app.databinding.FragmentHomeBinding
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
@@ -146,7 +147,7 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
                     val category = it.child("category").value
                     val url = it.child("url").value
 
-                    activityList.add(Activity(address=address.toString(),category=category.toString(), condition_free = condition_free.toString(),hours=hours, name=name.toString(),reason = description.toString() ,url = url.toString() ))
+                    activityList.add(Activity(address=address.toString(),category=category.toString(), condition_free = condition_free.toString(),hours=hours, name=name.toString(),description = description.toString() ,url = url.toString() ))
 
                 }
                 else{
