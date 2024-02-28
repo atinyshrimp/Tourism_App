@@ -7,9 +7,9 @@ import androidx.fragment.app.Fragment
 import com.example.tourism_app.data.Activity
 import com.example.tourism_app.databinding.DetailsActivityBinding
 import com.example.tourism_app.ui.conditions.ConditionsFragment
-import com.example.tourism_app.ui.dashboard.DashboardFragment
 import com.example.tourism_app.ui.history.HistoryFragment
 import com.example.tourism_app.ui.overview.OverviewFragment
+import com.example.tourism_app.ui.transport.TransportFragment
 import com.google.android.material.tabs.TabLayout
 
 class DetailsActivity: AppCompatActivity() {
@@ -41,7 +41,7 @@ class DetailsActivity: AppCompatActivity() {
                         0 -> replaceFragment(OverviewFragment(currentActivity))
                         1 -> replaceFragment(HistoryFragment(currentActivity))
                         2 -> replaceFragment(ConditionsFragment(currentActivity))
-                        3 -> replaceFragment(DashboardFragment())
+                        3 -> replaceFragment(TransportFragment(currentActivity))
 
                         else -> {}
                     }

@@ -1,7 +1,6 @@
 package com.example.tourism_app.ui.home
 
 import android.content.Intent
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +15,6 @@ import com.example.tourism_app.data.Hours
 import com.example.tourism_app.databinding.FragmentHomeBinding
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.tabs.TabLayout
-import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
@@ -85,42 +83,6 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
 
     private fun getActivityData(activityList: ArrayList<Activity>, activityRecyclerView: RecyclerView) {
         readData()
-/*
-         // test Activity elements until Firebase liaison
-        val activities = listOf(
-            Activity(name="Musée du Louvre", address="8 rue Sainte-Anne, 75001 Paris",
-                reason = "Experience the Louvre, the world's largest and most visited art museum, nestled in the heart of Paris. Home to over 35,000 works of art spanning from ancient civilizations to the 19th century, this iconic institution showcases the pinnacle of human creativity. Marvel at renowned masterpieces, including Leonardo da Vinci's Mona Lisa, the ancient Greek sculpture Venus de Milo, and the striking Winged Victory of Samothrace. The Louvre's architectural grandeur, from the medieval fortress to the glass pyramid entrance, adds to the allure of this cultural gem. Dive into a rich tapestry of history and artistry as you explore the Louvre's vast collections, making it an essential destination for any art and history enthusiast.",
-                condition_free = "everyone under 18yo and every EU resident under 26yo",
-                hours = Hours(
-                    monday = "09:00 - 18:00",
-                    tuesday = "closed",
-                    wednesday = "09:00 - 18:00",
-                    thursday = "09:00 - 18:00",
-                    friday = "09:00 - 21:45",
-                    saturday = "09:00 - 18:00",
-                    sunday = "09:00 - 18:00"),
-                category="Museum",
-                url = "https://www.louvre.fr/"),
-            Activity(name="Parc des Buttes-Chaumont", address="1 Rue Botzaris, 75019 Paris",
-                reason = "A beautiful public park with hills, bridges, and a lake.",
-                condition_free = "For everyone",
-                hours=Hours(
-                    monday = "07:00 - 20:00",
-                    tuesday = "07:00 - 20:00",
-                    wednesday = "07:00 - 20:00",
-                    thursday = "07:00 - 20:00",
-                    friday = "07:00 - 20:00",
-                    saturday = "07:00 - 20:00",
-                    sunday = "07:00 - 20:00"),
-                category="Garden",
-                url = "https://www.paris.fr/lieux/parc-des-buttes-chaumont-1757")
-        )
-
-        for (element in activities) {
-            activityList.add(element)
-        }*/
-
-        activityRecyclerView.adapter = ActivityRecyclerAdapter(activityList, this)
     }
 
     private fun readData() {
@@ -153,6 +115,8 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
                 else{
                     bool = false
                 }
+
+                binding.activityList.adapter = ActivityRecyclerAdapter(activityList, this)
             }.addOnFailureListener{
                 bool = false
             }

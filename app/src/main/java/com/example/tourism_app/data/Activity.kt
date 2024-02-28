@@ -93,7 +93,7 @@ data class Activity(
     }
 
     fun makeTextViewClickable(textView: TextView, context: Context) {
-        if (url != null) {
+        if (!url.isNullOrBlank()) {
             val clickableSpan = object : ClickableSpan() {
                 override fun onClick(widget: View) {
                     openUrl(context)
