@@ -15,8 +15,11 @@ import com.example.tourism_app.data.Hours
 import com.example.tourism_app.databinding.FragmentHomeBinding
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent {
 
@@ -86,43 +89,23 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
     }
 
     private fun readData() {
-        var bool = true
-        val lieu = "Lieu"
-        var i = 1
+        val activityRecyclerView = binding.activityList
         database = FirebaseDatabase.getInstance().getReference("Lieu")
-        while(i<3){
-            database.child(lieu.plus(i)).get().addOnSuccessListener {
-                if(it.exists()){
-                    val name = it.child("name").value
-                    val address = it.child("address").value
-                    val description = it.child("description").value
-                    val condition_free = it.child("condition_free").value
-                    val monday = it.child("hours").child("monday").value
-                    val tuesday = it.child("hours").child("tuesday").value
-                    val wednesday = it.child("hours").child("wednesday").value
-                    val thursday = it.child("hours").child("thursday").value
-                    val friday = it.child("hours").child("friday").value
-                    val saturday = it.child("hours").child("saturday").value
-                    val sunday = it.child("hours").child("sunday").value
-                    val hours = Hours(monday=monday.toString(), tuesday=tuesday.toString(),wednesday=wednesday.toString(), thursday=thursday.toString(), friday=friday.toString(),saturday=saturday.toString(), sunday=sunday.toString())
-
-                    val category = it.child("category").value
-                    val url = it.child("url").value
-
-                    activityList.add(Activity(address=address.toString(),category=category.toString(), condition_free = condition_free.toString(),hours=hours, name=name.toString(),description = description.toString() ,url = url.toString() ))
-
+        database.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot){
+                if(snapshot.exists()){
+                    for (activitySnapshot in snapshot.children){
+                        val activity = activitySnapshot.getValue(Activity::class.java)
+                        activityList.add(activity!!)
+                    }
+                    activityRecyclerView.adapter = ActivityRecyclerAdapter(activityList, this@HomeViewModel)
                 }
-                else{
-                    bool = false
-                }
-
-                binding.activityList.adapter = ActivityRecyclerAdapter(activityList, this)
-            }.addOnFailureListener{
-                bool = false
-            }
-            i++
         }
 
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
     }
 
     private fun getCategoryData(categoryList: ArrayList<Category>,
