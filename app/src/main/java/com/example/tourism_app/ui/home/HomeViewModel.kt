@@ -11,7 +11,6 @@ import com.example.tourism_app.data.ActivityRecyclerAdapter
 import com.example.tourism_app.data.Category
 import com.example.tourism_app.data.CategoryAdapter
 import com.example.tourism_app.R
-import com.example.tourism_app.data.Hours
 import com.example.tourism_app.databinding.FragmentHomeBinding
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.tabs.TabLayout
@@ -94,6 +93,7 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
         database.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot){
                 if(snapshot.exists()){
+                    activityList.clear()
                     for (activitySnapshot in snapshot.children){
                         val activity = activitySnapshot.getValue(Activity::class.java)
                         activityList.add(activity!!)
