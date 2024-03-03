@@ -1,6 +1,7 @@
 package com.example.tourism_app.ui.home
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +20,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
+import java.io.File
 
 class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent {
 
@@ -64,6 +67,8 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
         setupUserPicInteractivity()
 
         // setupTabs(tabLayout)
+
+
     }
 
     private fun setupTabs(tabLayout: TabLayout) {

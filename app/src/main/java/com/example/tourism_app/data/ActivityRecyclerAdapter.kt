@@ -1,6 +1,7 @@
 package com.example.tourism_app.data
 
 import android.annotation.SuppressLint
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,8 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tourism_app.R
+import com.google.firebase.storage.FirebaseStorage
+import java.io.File
 
 class ActivityRecyclerAdapter(
     private val activityList: ArrayList<Activity>,
@@ -32,6 +35,17 @@ class ActivityRecyclerAdapter(
         holder.category.text = currentItem.category
         holder.location.text = "Paris ${currentItem.getArrondissement()}"
         holder.visitCount.text = "(51)"
+
+        var imageName = currentItem.name
+        if(imageName != null) {
+            imageName = imageName.replace(" ", "")
+            val storageRef = FirebaseStorage.getInstance().reference.child("LieuImage/$imageName.jpg")
+            val localfile = File.createTempFile("tempImage", "jpg")
+            storageRef.getFile(localfile).addOnSuccessListener {
+                val bitmap = BitmapFactory.decodeFile(localfile.absolutePath)
+                holder.picture.setImageBitmap(bitmap)
+            }
+        }
     }
 
     override fun getItemCount(): Int {
