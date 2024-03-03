@@ -1,6 +1,7 @@
 package com.example.tourism_app
 
 import android.annotation.SuppressLint
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -11,6 +12,8 @@ import com.example.tourism_app.ui.history.HistoryFragment
 import com.example.tourism_app.ui.overview.OverviewFragment
 import com.example.tourism_app.ui.transport.TransportFragment
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.storage.FirebaseStorage
+import java.io.File
 
 class DetailsActivity: AppCompatActivity() {
     private lateinit var binding: DetailsActivityBinding
@@ -72,5 +75,16 @@ class DetailsActivity: AppCompatActivity() {
         binding.tvActName.text = currentActivity.name
         binding.tvActCategory.text = currentActivity.category
         binding.tvActLocation.text = "Paris ${currentActivity.getArrondissement()}"
+
+        var imageName = currentActivity.name
+        if(imageName != null) {
+            imageName = imageName.replace(" ", "")
+            val storageRef = FirebaseStorage.getInstance().reference.child("LieuImage/$imageName.jpg")
+            val localfile = File.createTempFile("tempImage", "jpg")
+            storageRef.getFile(localfile).addOnSuccessListener {
+                val bitmap = BitmapFactory.decodeFile(localfile.absolutePath)
+                binding.imageView.setImageBitmap(bitmap)
+            }
+        }
     }
 }
