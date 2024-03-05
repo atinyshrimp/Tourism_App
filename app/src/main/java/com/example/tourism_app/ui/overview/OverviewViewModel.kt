@@ -152,6 +152,8 @@ class OverviewViewModel: ViewModel() {
         if (todaySchedule != "closed") {
             binding.tvHours.text = todaySchedule
         } else {
+            binding.tvStatus.text = todaySchedule
+            binding.tvStatus.setTextColor(ContextCompat.getColor(binding.root.context, R.color.olympic_pink))
             binding.tvHours.text = ""
         }
 
