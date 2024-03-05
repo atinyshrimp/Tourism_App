@@ -1,7 +1,6 @@
 package com.example.tourism_app.ui.home
 
 import android.content.Intent
-import android.graphics.BitmapFactory
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,8 +19,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.storage.FirebaseStorage
-import java.io.File
 
 class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent {
 
@@ -51,7 +48,7 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
 
         // initializing the list of activities
         activityList = arrayListOf()
-        getActivityData(activityList, activityRecyclerView)
+        getActivityData()
 
         // getting values for the Category recycler view
         val categoryRecyclerView = binding.categoryList
@@ -66,9 +63,7 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
         // make the user pic lead to Profile Fragment
         setupUserPicInteractivity()
 
-        // setupTabs(tabLayout)
-
-
+        setupTabs(tabLayout)
     }
 
     private fun setupTabs(tabLayout: TabLayout) {
@@ -88,7 +83,7 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
         })
     }
 
-    private fun getActivityData(activityList: ArrayList<Activity>, activityRecyclerView: RecyclerView) {
+    private fun getActivityData() {
         readData()
     }
 

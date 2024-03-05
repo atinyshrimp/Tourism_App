@@ -83,19 +83,6 @@
 
     </LinearLayout>
 
-    <SearchView
-        android:id="@+id/search_bar"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/searchbar_background"
-        android:iconifiedByDefault="false"
-        android:orientation="horizontal"
-        android:queryHint="@string/searchPlaceholder"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userLayout" />
-
     <LinearLayout
         android:id="@+id/activityLayout"
         android:layout_width="match_parent"
@@ -105,7 +92,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_bar">
+        app:layout_constraintTop_toBottomOf="@+id/userLayout">
 
         <TextView
             android:id="@+id/textView4"
@@ -191,17 +178,5 @@
             android:layout_marginTop="10dp" />
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/button2"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minWidth="0dip"
-        android:minHeight="0dip"
-        android:text="@string/btnAll"
-        android:textColor="@color/gold"
-        app:layout_constraintEnd_toEndOf="@+id/categoryLayout"
-        app:layout_constraintTop_toBottomOf="@+id/categoryLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
