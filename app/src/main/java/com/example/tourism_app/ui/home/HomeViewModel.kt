@@ -111,11 +111,12 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
     private fun getCategoryData(categoryList: ArrayList<Category>,
                                 categoryRecyclerView: RecyclerView) {
         val categories = listOf(
-            Category(fragment.resources.getStringArray(R.array.categories)[0], R.drawable.category_aesthetics),
-            Category(fragment.resources.getStringArray(R.array.categories)[1], R.drawable.category_event),
-            Category(fragment.resources.getStringArray(R.array.categories)[2], R.drawable.category_garden),
-            Category(fragment.resources.getStringArray(R.array.categories)[3], R.drawable.category_museum)
+            Category(fragment.resources.getStringArray(R.array.categories)[0]),
+            Category(fragment.resources.getStringArray(R.array.categories)[1]),
+            Category(fragment.resources.getStringArray(R.array.categories)[2]),
+            Category(fragment.resources.getStringArray(R.array.categories)[3])
         )
+
 
         for (element in categories) {
             categoryList.add(element)
