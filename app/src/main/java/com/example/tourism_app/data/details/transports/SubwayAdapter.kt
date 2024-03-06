@@ -21,8 +21,11 @@ class SubwayAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val subway = subwayList[position]
+        val subData = subway.split(":")
+        val subNb = subData[0]
+        val subStation = subData[1]
         val imageView = holder.image
-        val imageName = "metro$subway"
+        val imageName = "metro$subNb"
         val resourceId = imageView.resources.getIdentifier(imageName, "drawable", imageView.context.packageName)
 
         if (resourceId != 0) {
@@ -31,6 +34,8 @@ class SubwayAdapter(
             // Log an error if the resource is not found
             Log.e("SubwayAdapter", "Resource not found for subway: $subway")
         }
+
+        holder.station.text = subStation
     }
 
     override fun getItemCount(): Int {

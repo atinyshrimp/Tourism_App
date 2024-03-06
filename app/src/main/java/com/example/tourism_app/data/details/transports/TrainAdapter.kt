@@ -22,8 +22,12 @@ class TrainAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val train = trainList[position]
+        val trainData = train.split(":")
+        val trainChar = trainData[0]
+        val trainStop = trainData[1]
+
         val imageView = holder.image
-        val imageName = "train${train.lowercase()}"
+        val imageName = "train${trainChar.lowercase()}"
         val resourceId = imageView.resources.getIdentifier(imageName, "drawable", imageView.context.packageName)
 
         if (resourceId != 0) {
@@ -32,6 +36,8 @@ class TrainAdapter(
             // Log an error if the resource is not found
             Log.e("TrainAdapter", "Resource not found for train: $train")
         }
+
+        holder.stop.text = trainStop
     }
 
     override fun getItemCount(): Int {
