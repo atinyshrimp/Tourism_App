@@ -130,6 +130,50 @@ data class Activity(
         }
     }
 
+    fun getBuses(): ArrayList<String> {
+        val array = transport?.bus?.replace("{", "")?.replace("}", "")
+
+        return when {
+            array?.contains(",") == true -> {
+                ArrayList(array.split(","))
+            }
+            else -> arrayListOf(array ?: "")
+        }
+    }
+
+    fun getRERs(): ArrayList<String> {
+        val array = transport?.rer?.replace("{", "")?.replace("}", "")
+
+        return when {
+            array?.contains(",") == true -> {
+                ArrayList(array.split(","))
+            }
+            else -> arrayListOf(array ?: "")
+        }
+    }
+
+    fun getSubways(): ArrayList<String> {
+        val array = transport?.metro?.replace("{", "")?.replace("}", "")
+
+        return when {
+            array?.contains(",") == true -> {
+                ArrayList(array.split(","))
+            }
+            else -> arrayListOf(array ?: "")
+        }
+    }
+
+    fun getTrains(): ArrayList<String> {
+        val array = transport?.train?.replace("{", "")?.replace("}", "")
+
+        return when {
+            array?.contains(",") == true -> {
+                ArrayList(array.split(","))
+            }
+            else -> arrayListOf(array ?: "")
+        }
+    }
+
     private fun openUrl(context: Context) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         context.startActivity(intent)
@@ -182,9 +226,13 @@ data class Hours(
 
 data class Transport(
     var bus: String? = null,
-    var metro: String? = null
+    var metro: String? = null,
+    var rer: String? = null,
+    var train: String? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readString(),
         parcel.readString(),
         parcel.readString()
     )
@@ -192,6 +240,8 @@ data class Transport(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(bus)
         parcel.writeString(metro)
+        parcel.writeString(rer)
+        parcel.writeString(train)
     }
 
     override fun describeContents(): Int {
