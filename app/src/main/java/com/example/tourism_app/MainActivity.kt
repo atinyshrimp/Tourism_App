@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
 
         pseudo = intent.getStringExtra("pseudo").toString()
         val notificationsFragment = NotificationsFragment.newInstance(pseudo)
-
         // default fragment is Home
         replaceFragment(HomeFragment())
 

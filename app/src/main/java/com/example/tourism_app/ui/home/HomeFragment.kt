@@ -31,8 +31,10 @@ class HomeFragment : Fragment() {
 
         homeViewModel.setupViews(binding, this)
 
+
         return root
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

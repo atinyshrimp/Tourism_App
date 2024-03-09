@@ -5,11 +5,13 @@ import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tourism_app.R
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
 
@@ -46,6 +48,15 @@ class ActivityRecyclerAdapter(
                 holder.picture.setImageBitmap(bitmap)
             }
         }
+        holder.like_button.setOnClickListener{
+            //we need the pseudo to save it at the right place
+            //if already saved then delete it otherwise create new element in bdd
+            val database = FirebaseDatabase.getInstance().reference
+            val saved_lieu_ref = database.child("Saved_lieu")
+            val newUserRef = saved_lieu_ref.push()
+            newUserRef.child("name").setValue("")
+            newUserRef.child("visited").setValue(0)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -59,6 +70,7 @@ class ActivityRecyclerAdapter(
         val category : TextView = itemView.findViewById(R.id.tvCategory)
         private val cardClickable : ConstraintLayout = itemView.findViewById(R.id.constraintLayout)
         val picture : ImageView = itemView.findViewById(R.id.ivPicture)
+        val like_button : Button = itemView.findViewById(R.id.ibLike)
 
         init {
             cardClickable.setOnClickListener(this)
