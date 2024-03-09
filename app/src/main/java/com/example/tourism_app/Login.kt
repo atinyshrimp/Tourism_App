@@ -2,12 +2,12 @@ package com.example.tourism_app
 
 import android.content.ContentValues.TAG
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.Firebase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -38,6 +38,7 @@ class Login : AppCompatActivity() {
             clientsRef.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     var isUserFound = false
+                    var pseudo = ""
                     for (clientSnapshot in dataSnapshot.children) {
                         val mailFromDB = clientSnapshot.child("mail").getValue()
                         val passwordFromDB = clientSnapshot.child("passwd").getValue()
@@ -49,12 +50,17 @@ class Login : AppCompatActivity() {
 
                         if ((usernameEntered == usernameFromDBString ||usernameEntered == mailFromDBString) && enteredPassword == passwordFromDBString) {
                             isUserFound = true
+                            //for future activities, get pseudo
+                            pseudo = usernameFromDB.toString()
                             break // Exit the loop once user is found
                         }
                     }
                     if (isUserFound) {
                         Toast.makeText(applicationContext, "Login Successful", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this@Login, MainActivity::class.java)
+                        val b = Bundle()
+                        b.putString("pseudo",pseudo ) //Your id
+                        intent.putExtras(b) //Put your id to your next Intent
                         startActivity(intent)
                     } else {
                         Toast.makeText(applicationContext, "Wrong password or username", Toast.LENGTH_SHORT).show()

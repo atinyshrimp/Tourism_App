@@ -10,6 +10,8 @@
     <string name="popCategories">Popular Categories</string>
     <string name="category">Category</string>
     <string name="activity_heading">Venture easily in Paris!</string>
+    <string name="activity_notifications_heading">Find your favorite places</string>
+    <string name="profile_picture_description">Profile picture</string>
     <string name="allFilter">All</string>
     <string name="popularFilter">Popular</string>
     <string name="recommendedFilter">Recommended</string>
