@@ -3,6 +3,7 @@ package com.example.tourism_app
 import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.tourism_app.data.Activity
@@ -98,6 +99,7 @@ class DetailsActivity: AppCompatActivity() {
             //we need the pseudo to save it at the right place
             //if already saved then delete it otherwise create new element in bdd
             val database = FirebaseDatabase.getInstance().reference
+            var idDelete = ""
             //in the branch of the user :
             val savedlieuref = database.child("Saved_lieu").child(username)
             savedlieuref.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -109,17 +111,26 @@ class DetailsActivity: AppCompatActivity() {
                         //we need to have the name of the lieu to compare : ex : Lieu1 instead of Colonne...
                         if(currentActivity.name==nameFromDB){
                             isLieuLiked = true
+                            idDelete = userSnapshot.key.toString()
                             break
                         }
                     }
                     if(isLieuLiked){
                         //we delete the element
+                        val deleteLieu = database.child("Saved_lieu").child(username).child(idDelete)
+                        val deleteTask = deleteLieu.removeValue()
+                        deleteTask.addOnSuccessListener {
+                            Toast.makeText(applicationContext,"Place removed from favorites", Toast.LENGTH_SHORT).show()
+                        }.addOnFailureListener{
+                            Toast.makeText(applicationContext,"Removing failed", Toast.LENGTH_SHORT).show()
+                        }
                     }
                     else{
                         //we create liked lieu element
                         val newUserRef = savedlieuref.push()
                         newUserRef.child("name").setValue(currentActivity.name)
                         newUserRef.child("visited").setValue(0)
+                        Toast.makeText(applicationContext,"Place added to favorites", Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onCancelled(databaseError: DatabaseError) {

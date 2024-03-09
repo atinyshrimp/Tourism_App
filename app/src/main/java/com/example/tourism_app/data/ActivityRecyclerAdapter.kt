@@ -60,6 +60,7 @@ class ActivityRecyclerAdapter(
             //if already saved then delete it otherwise create new element in bdd
             val database = FirebaseDatabase.getInstance().reference
             //in the branch of the user :
+            var idDelete = ""
             val savedlieuref = database.child("Saved_lieu").child(user)
             savedlieuref.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -70,11 +71,14 @@ class ActivityRecyclerAdapter(
                         //we need to have the name of the lieu to compare : ex : Lieu1 instead of Colonne...
                         if(currentItem.name==nameFromDB){
                             isLieuLiked = true
+                            idDelete = userSnapshot.key.toString()
                             break
                         }
                     }
                     if(isLieuLiked){
                         //we delete the element
+                        val deleteLieu = database.child("Saved_lieu").child(user).child(idDelete)
+                        val deleteTask = deleteLieu.removeValue()
                     }
                     else{
                         //we create liked lieu element
