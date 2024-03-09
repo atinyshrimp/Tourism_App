@@ -30,11 +30,14 @@ class NotificationsFragment : Fragment() {
         _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        notificationsViewModel.setupViews(binding, this)
 
+        //getting the pseudo of the user
         val b = arguments
-        val pseudo = b?.getString("pseudo", "null")
+        var pseudo = b?.getString("pseudo", "null")
         binding.username.text = pseudo
+        pseudo = pseudo.toString()
+
+        notificationsViewModel.setupViews(binding, this, pseudo)
 
 
         return root

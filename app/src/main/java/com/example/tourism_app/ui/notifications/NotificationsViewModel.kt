@@ -3,6 +3,7 @@ package com.example.tourism_app.ui.notifications
 import android.content.Intent
 import android.content.Intent.getIntent
 import android.content.Intent.getIntentOld
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tourism_app.DetailsActivity
@@ -32,7 +33,7 @@ class NotificationsViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecy
         openDetailsActivity(activity)
     }
 
-    fun setupViews(binding: FragmentNotificationsBinding, notificationsFragment: NotificationsFragment) {
+    fun setupViews(binding: FragmentNotificationsBinding, notificationsFragment: NotificationsFragment, pseudo : String) {
         fragment = notificationsFragment
         this.binding = binding
 
@@ -45,48 +46,73 @@ class NotificationsViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecy
 
         // initializing the list of activities
         activityList = arrayListOf()
-        getActivityData()
+        getActivityData(pseudo)
 
         // make the user pic lead to Profile Fragment
         setupUserPicInteractivity()
 
     }
 
-    private fun getActivityData() {
-        readData()
+    private fun getActivityData(pseudo : String) {
+        readData(pseudo)
     }
 
-    private fun readData() {
+    private fun readData(pseudo : String) {
         //we need to know the name of the profile first to be in the right subsection
-        /*val b = getIntentOld().extras
-        var value = -1 // or other values
-        if (b != null) value = b.getInt("key")*/
-        //we will first get the saved lieu from firebase, then in lieu we get the full info on those
-        database2 = FirebaseDatabase.getInstance().getReference("Saved_lieu")
+        //it is the parameter pseudo
+
+        //we will first get the "Saved_lieu" from firebase, then in lieu we get the full info on those
+        //we will retrieve data from the Saved_lieu part of the database and specifically for our current user (using pseudo)
+        /*val activityRecyclerView = binding.activityList
+        database = FirebaseDatabase.getInstance().getReference("Lieu")
+        database.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot){
+                if(snapshot.exists()){
+
+                    activityList.clear()
+                    for (activitySnapshot in snapshot.children){
+                        val activity = activitySnapshot.getValue(Activity::class.java)
+                        activityList.add(activity!!)
+                    }
+                    activityRecyclerView.adapter = ActivityRecyclerAdapter(activityList, this@NotificationsViewModel)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })*/
+
+
+
+        val activityRecyclerView = binding.activityList
+        database2 = FirebaseDatabase.getInstance().getReference("Saved_lieu").child(pseudo)
         database2.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot){
                 if(snapshot.exists()){
-                    //here we get the place name in order to get it from lieu
+                    //here we get the place names in order to then retrieve all their info from "Lieu"
+                    activityList.clear()
+                    for (clientSnapshot in snapshot.children) {
+                        //we get the name of one of the favorite place
+                        val nameFromDB = clientSnapshot.child("name").getValue()
+                        //we need to locate it in the "Lieu" part of the database now to retrieve all the data
 
-
-                    val activityRecyclerView = binding.activityList
-                    database = FirebaseDatabase.getInstance().getReference("Lieu")
-                    database.addValueEventListener(object : ValueEventListener{
-                        override fun onDataChange(snapshot: DataSnapshot){
-                            if(snapshot.exists()){
-                                activityList.clear()
-                                for (activitySnapshot in snapshot.children){
-                                    val activity = activitySnapshot.getValue(Activity::class.java)
+                        //set reference in the correct place : the correct lieu in "Lieu"
+                        database = FirebaseDatabase.getInstance().getReference("Lieu").child(nameFromDB.toString())
+                        database.addValueEventListener(object : ValueEventListener{
+                            override fun onDataChange(snapshot: DataSnapshot){
+                                if(snapshot.exists()){
+                                    val activity = snapshot.getValue(Activity::class.java)
                                     activityList.add(activity!!)
+                                    activityRecyclerView.adapter?.notifyDataSetChanged()
                                 }
-                                activityRecyclerView.adapter = ActivityRecyclerAdapter(activityList, this@NotificationsViewModel)
                             }
-                        }
-
-                        override fun onCancelled(error: DatabaseError) {
-                            TODO("Not yet implemented")
-                        }
-                    })
+                            override fun onCancelled(error: DatabaseError) {
+                                TODO("Not yet implemented")
+                            }
+                        })
+                    }
+                    activityRecyclerView.adapter = ActivityRecyclerAdapter(activityList, this@NotificationsViewModel)
                 }
             }
             override fun onCancelled(error: DatabaseError) {
