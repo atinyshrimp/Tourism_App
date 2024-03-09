@@ -48,6 +48,7 @@ class ActivityRecyclerAdapter(
                 holder.picture.setImageBitmap(bitmap)
             }
         }
+        /*
         holder.like_button.setOnClickListener{
             //we need the pseudo to save it at the right place
             //if already saved then delete it otherwise create new element in bdd
@@ -56,7 +57,7 @@ class ActivityRecyclerAdapter(
             val newUserRef = saved_lieu_ref.push()
             newUserRef.child("name").setValue("")
             newUserRef.child("visited").setValue(0)
-        }
+        }*/
     }
 
     override fun getItemCount(): Int {
@@ -70,7 +71,7 @@ class ActivityRecyclerAdapter(
         val category : TextView = itemView.findViewById(R.id.tvCategory)
         private val cardClickable : ConstraintLayout = itemView.findViewById(R.id.constraintLayout)
         val picture : ImageView = itemView.findViewById(R.id.ivPicture)
-        val like_button : Button = itemView.findViewById(R.id.ibLike)
+        //val like_button : Button = itemView.findViewById(R.id.ibLike)
 
         init {
             cardClickable.setOnClickListener(this)
