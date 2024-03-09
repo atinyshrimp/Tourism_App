@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.tourism_app.databinding.FragmentHomeBinding
 
-class HomeFragment : Fragment() {
+class HomeFragment(
+    private val user: String
+) : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
 
@@ -29,6 +31,7 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        homeViewModel.username = user
         homeViewModel.setupViews(binding, this)
 
         return root

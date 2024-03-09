@@ -26,6 +26,7 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
     private lateinit var activityList: ArrayList<Activity>
     private lateinit var fragment: HomeFragment
     private lateinit var database: DatabaseReference
+    lateinit var username: String
 
     override fun onItemClick(position: Int) {
         val activity = activityList[position]
@@ -35,6 +36,8 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
     fun setupViews(binding: FragmentHomeBinding, homeFragment: HomeFragment) {
         fragment = homeFragment
         this.binding = binding
+
+        binding.username.text = username
 
         // Access UI components and perform setup
         val tabLayout = binding.activityTabs
