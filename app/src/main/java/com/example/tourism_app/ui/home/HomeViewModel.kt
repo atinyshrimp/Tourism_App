@@ -131,6 +131,7 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
     private fun openDetailsActivity(activity: Activity){
         val intent = Intent(fragment.context, DetailsActivity::class.java)
         intent.putExtra("activityKey", activity)
+        intent.putExtra("username",username)
         fragment.context?.startActivity(intent)
     }
 
