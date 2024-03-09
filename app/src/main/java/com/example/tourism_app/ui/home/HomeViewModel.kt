@@ -33,7 +33,7 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
         openDetailsActivity(activity)
     }
 
-    fun setupViews(binding: FragmentHomeBinding, homeFragment: HomeFragment) {
+    fun setupViews(binding: FragmentHomeBinding, homeFragment: HomeFragment, user: String) {
         fragment = homeFragment
         this.binding = binding
 
@@ -51,7 +51,7 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
 
         // initializing the list of activities
         activityList = arrayListOf()
-        getActivityData()
+        getActivityData(user)
 
         // getting values for the Category recycler view
         val categoryRecyclerView = binding.categoryList
@@ -86,11 +86,11 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
         })
     }
 
-    private fun getActivityData() {
-        readData()
+    private fun getActivityData(user:String) {
+        readData(user)
     }
 
-    private fun readData() {
+    private fun readData(user:String) {
         val activityRecyclerView = binding.activityList
         database = FirebaseDatabase.getInstance().getReference("Lieu")
         database.addValueEventListener(object : ValueEventListener{
@@ -101,7 +101,7 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
                         val activity = activitySnapshot.getValue(Activity::class.java)
                         activityList.add(activity!!)
                     }
-                    activityRecyclerView.adapter = ActivityRecyclerAdapter(activityList, this@HomeViewModel)
+                    activityRecyclerView.adapter = ActivityRecyclerAdapter(activityList, this@HomeViewModel, user)
                 }
         }
 

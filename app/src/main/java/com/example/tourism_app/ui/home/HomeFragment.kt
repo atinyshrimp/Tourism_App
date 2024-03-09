@@ -32,7 +32,7 @@ class HomeFragment(
         val root: View = binding.root
 
         homeViewModel.username = user
-        homeViewModel.setupViews(binding, this)
+        homeViewModel.setupViews(binding, this, user)
 
 
         return root

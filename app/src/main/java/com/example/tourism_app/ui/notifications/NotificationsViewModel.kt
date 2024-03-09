@@ -94,17 +94,21 @@ class NotificationsViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecy
                     activityList.clear()
                     for (clientSnapshot in snapshot.children) {
                         //we get the name of one of the favorite place
-                        val nameFromDB = clientSnapshot.child("name").getValue()
+                        val nameFromDB = clientSnapshot.child("name").value
                         //we need to locate it in the "Lieu" part of the database now to retrieve all the data
 
-                        //set reference in the correct place : the correct lieu in "Lieu"
-                        database = FirebaseDatabase.getInstance().getReference("Lieu").child(nameFromDB.toString())
+                        //set reference in the correct place : in "Lieu"
+                        database = FirebaseDatabase.getInstance().getReference("Lieu")
                         database.addValueEventListener(object : ValueEventListener{
                             override fun onDataChange(snapshot: DataSnapshot){
-                                if(snapshot.exists()){
-                                    val activity = snapshot.getValue(Activity::class.java)
-                                    activityList.add(activity!!)
-                                    activityRecyclerView.adapter?.notifyDataSetChanged()
+                                //we will look at every children of Lieu to see if it is the Lieu with the correct name
+                                for (userSnapshot in snapshot.children) {
+                                    val usernameFromDB = userSnapshot.child("name").getValue(String::class.java)
+                                    if(usernameFromDB == nameFromDB){
+                                        val activity = userSnapshot.getValue(Activity::class.java)
+                                        activityList.add(activity!!)
+                                        activityRecyclerView.adapter?.notifyDataSetChanged()
+                                    }
                                 }
                             }
                             override fun onCancelled(error: DatabaseError) {
@@ -112,7 +116,7 @@ class NotificationsViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecy
                             }
                         })
                     }
-                    activityRecyclerView.adapter = ActivityRecyclerAdapter(activityList, this@NotificationsViewModel)
+                    activityRecyclerView.adapter = ActivityRecyclerAdapter(activityList, this@NotificationsViewModel, pseudo)
                 }
             }
             override fun onCancelled(error: DatabaseError) {

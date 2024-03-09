@@ -6,18 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tourism_app.R
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
 
 class ActivityRecyclerAdapter(
     private val activityList: ArrayList<Activity>,
-    private val listener: ActivityRecyclerEvent
+    private val listener: ActivityRecyclerEvent,
+    private val user: String
 ) : RecyclerView.Adapter<ActivityRecyclerAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -48,16 +54,40 @@ class ActivityRecyclerAdapter(
                 holder.picture.setImageBitmap(bitmap)
             }
         }
-        /*
+
         holder.like_button.setOnClickListener{
             //we need the pseudo to save it at the right place
             //if already saved then delete it otherwise create new element in bdd
             val database = FirebaseDatabase.getInstance().reference
-            val saved_lieu_ref = database.child("Saved_lieu")
-            val newUserRef = saved_lieu_ref.push()
-            newUserRef.child("name").setValue("")
-            newUserRef.child("visited").setValue(0)
-        }*/
+            //in the branch of the user :
+            val savedlieuref = database.child("Saved_lieu").child(user)
+            savedlieuref.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    var isLieuLiked = false
+                    for (userSnapshot in dataSnapshot.children) {
+                        //we should be in the user section, looking at all the elements
+                        val nameFromDB = userSnapshot.child("name").value
+                        //we need to have the name of the lieu to compare : ex : Lieu1 instead of Colonne...
+                        if(currentItem.name==nameFromDB){
+                            isLieuLiked = true
+                            break
+                        }
+                    }
+                    if(isLieuLiked){
+                        //we delete the element
+                    }
+                    else{
+                        //we create liked lieu element
+                        val newUserRef = savedlieuref.push()
+                        newUserRef.child("name").setValue(currentItem.name)
+                        newUserRef.child("visited").setValue(0)
+                    }
+                }
+                override fun onCancelled(databaseError: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
+        }
     }
 
     override fun getItemCount(): Int {
@@ -71,7 +101,7 @@ class ActivityRecyclerAdapter(
         val category : TextView = itemView.findViewById(R.id.tvCategory)
         private val cardClickable : ConstraintLayout = itemView.findViewById(R.id.constraintLayout)
         val picture : ImageView = itemView.findViewById(R.id.ivPicture)
-        //val like_button : Button = itemView.findViewById(R.id.ibLike)
+        val like_button : ImageButton = itemView.findViewById(R.id.ibLike)
 
         init {
             cardClickable.setOnClickListener(this)
