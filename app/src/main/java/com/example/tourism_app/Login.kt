@@ -39,7 +39,6 @@ class Login : AppCompatActivity() {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     var isUserFound = false
                     var pseudo = ""
-                    var mail = ""
                     for (clientSnapshot in dataSnapshot.children) {
                         val mailFromDB = clientSnapshot.child("mail").getValue()
                         val passwordFromDB = clientSnapshot.child("passwd").getValue()
@@ -51,18 +50,17 @@ class Login : AppCompatActivity() {
 
                         if ((usernameEntered == usernameFromDBString ||usernameEntered == mailFromDBString) && enteredPassword == passwordFromDBString) {
                             isUserFound = true
+                            //for future activities, get pseudo
                             pseudo = usernameFromDB.toString()
-                            mail = mailFromDB.toString()
-                            break
+                            break // Exit the loop once user is found
                         }
                     }
                     if (isUserFound) {
                         Toast.makeText(applicationContext, "Login Successful", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this@Login, MainActivity::class.java)
                         val b = Bundle()
-                        b.putString("pseudo",pseudo )
-                        b.putString("mail",mail )
-                        intent.putExtras(b)
+                        b.putString("pseudo",pseudo ) //Your id
+                        intent.putExtras(b) //Put your id to your next Intent
                         startActivity(intent)
                     } else {
                         Toast.makeText(applicationContext, "Wrong password or username", Toast.LENGTH_SHORT).show()

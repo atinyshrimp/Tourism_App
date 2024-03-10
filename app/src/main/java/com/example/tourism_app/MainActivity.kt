@@ -14,8 +14,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMain2Binding
     lateinit var navbarView: BottomNavigationView
-    private lateinit var pseudo : String
-    private lateinit var mail : String
+    lateinit var pseudo : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,34 +22,20 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Retrieve the pseudo and mail values from the intent
         pseudo = intent.getStringExtra("pseudo").toString()
-        mail = intent.getStringExtra("mail").toString()
-
-        // Default fragment is Home
+        val notificationsFragment = NotificationsFragment.newInstance(pseudo)
+        // default fragment is Home
         replaceFragment(HomeFragment(pseudo))
 
         navbarView = binding.navView
         navbarView.setOnItemSelectedListener {
             when(it.itemId) {
                 R.id.navigation_home -> replaceFragment(HomeFragment(pseudo))
-<<<<<<< HEAD
                 R.id.navigation_dashboard -> replaceFragment(DashboardFragment(pseudo))
-                R.id.navigation_notifications -> {
-                    val notificationsFragment = NotificationsFragment.newInstance(pseudo)
-                    replaceFragment(notificationsFragment)
-                }
-                R.id.navigation_profile -> {
-                    val profileFragment = ProfileFragment.newInstance(pseudo, mail) // Pass both pseudo and mail
-                    replaceFragment(profileFragment)
-                }
-=======
-                R.id.navigation_dashboard -> replaceFragment(DashboardFragment())
                 R.id.navigation_notifications -> replaceFragment(notificationsFragment)
                 R.id.navigation_profile -> replaceFragment(ProfileFragment())
 
                 else -> {}
->>>>>>> parent of cce62ec (Map is here)
             }
             true
         }
