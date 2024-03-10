@@ -1,5 +1,7 @@
 package com.example.tourism_app.data.details.transports
 
+import android.content.ContentValues
+import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +10,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tourism_app.R
+import com.google.firebase.storage.FirebaseStorage
+import java.io.File
 
 class TrainAdapter(
     private val trainList: ArrayList<String>
@@ -28,13 +32,13 @@ class TrainAdapter(
 
         val imageView = holder.image
         val imageName = "train${trainChar.lowercase()}"
-        val resourceId = imageView.resources.getIdentifier(imageName, "drawable", imageView.context.packageName)
-
-        if (resourceId != 0) {
-            imageView.setImageResource(resourceId)
-        } else {
-            // Log an error if the resource is not found
-            Log.e("TrainAdapter", "Resource not found for train: $train")
+        val storageRef = FirebaseStorage.getInstance().reference.child("Transport/Train/$imageName.png")
+        val localFile = File.createTempFile("temp3Image", "png")
+        storageRef.getFile(localFile).addOnSuccessListener {
+            val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
+            imageView.setImageBitmap(bitmap)
+        }.addOnFailureListener { exception ->
+            Log.e(ContentValues.TAG, "Error downloading bus image :", exception)
         }
 
         holder.stop.text = trainStop
