@@ -26,15 +26,18 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
     private lateinit var activityList: ArrayList<Activity>
     private lateinit var fragment: HomeFragment
     private lateinit var database: DatabaseReference
+    lateinit var username: String
 
     override fun onItemClick(position: Int) {
         val activity = activityList[position]
         openDetailsActivity(activity)
     }
 
-    fun setupViews(binding: FragmentHomeBinding, homeFragment: HomeFragment) {
+    fun setupViews(binding: FragmentHomeBinding, homeFragment: HomeFragment, user: String) {
         fragment = homeFragment
         this.binding = binding
+
+        binding.username.text = username
 
         // Access UI components and perform setup
         val tabLayout = binding.activityTabs
@@ -48,7 +51,7 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
 
         // initializing the list of activities
         activityList = arrayListOf()
-        getActivityData()
+        getActivityData(user)
 
         // getting values for the Category recycler view
         val categoryRecyclerView = binding.categoryList
@@ -83,11 +86,11 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
         })
     }
 
-    private fun getActivityData() {
-        readData()
+    private fun getActivityData(user:String) {
+        readData(user)
     }
 
-    private fun readData() {
+    private fun readData(user:String) {
         val activityRecyclerView = binding.activityList
         database = FirebaseDatabase.getInstance().getReference("Lieu")
         database.addValueEventListener(object : ValueEventListener{
@@ -98,7 +101,7 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
                         val activity = activitySnapshot.getValue(Activity::class.java)
                         activityList.add(activity!!)
                     }
-                    activityRecyclerView.adapter = ActivityRecyclerAdapter(activityList, this@HomeViewModel)
+                    activityRecyclerView.adapter = ActivityRecyclerAdapter(activityList, this@HomeViewModel, user)
                 }
         }
 
@@ -128,6 +131,7 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
     private fun openDetailsActivity(activity: Activity){
         val intent = Intent(fragment.context, DetailsActivity::class.java)
         intent.putExtra("activityKey", activity)
+        intent.putExtra("username",username)
         fragment.context?.startActivity(intent)
     }
 
