@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMain2Binding
     lateinit var navbarView: BottomNavigationView
     lateinit var pseudo : String
+    lateinit var mail : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,21 +24,26 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Retrieve the pseudo and mail values from the intent
         pseudo = intent.getStringExtra("pseudo").toString()
-        val notificationsFragment = NotificationsFragment.newInstance(pseudo)
+        mail = intent.getStringExtra("mail").toString()
 
-        // default fragment is Home
+        // Default fragment is Home
         replaceFragment(HomeFragment())
 
         navbarView = binding.navView
-        navbarView.setOnItemSelectedListener {
-            when(it.itemId) {
+        navbarView.setOnItemSelectedListener { menuItem ->
+            when(menuItem.itemId) {
                 R.id.navigation_home -> replaceFragment(HomeFragment())
                 R.id.navigation_dashboard -> replaceFragment(DashboardFragment())
-                R.id.navigation_notifications -> replaceFragment(notificationsFragment)
-                R.id.navigation_profile -> replaceFragment(ProfileFragment())
-
-                else -> {}
+                R.id.navigation_notifications -> {
+                    val notificationsFragment = NotificationsFragment.newInstance(pseudo)
+                    replaceFragment(notificationsFragment)
+                }
+                R.id.navigation_profile -> {
+                    val profileFragment = ProfileFragment.newInstance(pseudo, mail) // Pass both pseudo and mail
+                    replaceFragment(profileFragment)
+                }
             }
             true
         }
