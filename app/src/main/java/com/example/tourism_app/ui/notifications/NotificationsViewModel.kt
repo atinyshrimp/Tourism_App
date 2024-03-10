@@ -65,15 +65,15 @@ class NotificationsViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecy
             false)
 
         // initializing the list of categories
-        visitedList = arrayListOf()
-        readVisitData(visitedList, visitRecyclerView, pseudo)
+        //visitedList = arrayListOf()
+        //readVisitData(visitedList, visitRecyclerView, pseudo)
 
 
         // make the user pic lead to Profile Fragment
         setupUserPicInteractivity()
 
     }
-    private fun readVisitData(categoryList: ArrayList<Activity>,
+   /* private fun readVisitData(categoryList: ArrayList<Activity>,
                               visitRecyclerView: RecyclerView, pseudo: String
     ) {
         //we need to know the name of the profile first to be in the right subsection
@@ -126,7 +126,7 @@ class NotificationsViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecy
                 TODO("Not yet implemented")
             }
         })
-    }
+    }*/
 
     private fun getActivityData(pseudo : String) {
         readData(pseudo)
