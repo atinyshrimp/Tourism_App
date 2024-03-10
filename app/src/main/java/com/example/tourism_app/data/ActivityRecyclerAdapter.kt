@@ -44,9 +44,9 @@ class ActivityRecyclerAdapter(
         if(imageName != null) {
             imageName = imageName.replace(" ", "")
             val storageRef = FirebaseStorage.getInstance().reference.child("LieuImage/$imageName.jpg")
-            val localfile = File.createTempFile("tempImage", "jpg")
-            storageRef.getFile(localfile).addOnSuccessListener {
-                val bitmap = BitmapFactory.decodeFile(localfile.absolutePath)
+            val localFile = File.createTempFile("tempImage", "jpg")
+            storageRef.getFile(localFile).addOnSuccessListener {
+                val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
                 holder.picture.setImageBitmap(bitmap)
             }
         }

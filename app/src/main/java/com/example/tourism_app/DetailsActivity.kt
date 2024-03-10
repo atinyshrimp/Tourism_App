@@ -1,8 +1,10 @@
 package com.example.tourism_app
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -131,6 +133,117 @@ class DetailsActivity: AppCompatActivity() {
                         newUserRef.child("name").setValue(currentActivity.name)
                         newUserRef.child("visited").setValue(0)
                         Toast.makeText(applicationContext,"Place added to favorites", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                override fun onCancelled(databaseError: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
+        }
+
+        binding.button.setOnClickListener{
+            //need to determine whether it has already been visited (Saved_Lieu child : "visited" set to 1)
+            val database = FirebaseDatabase.getInstance().reference
+            var idVisit = ""
+
+            //in the branch of the user :
+            val savedLieuRef = database.child("Saved_lieu").child(username)
+            savedLieuRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    var isLieuVisited = false
+                    for (userSnapshot in dataSnapshot.children) {
+                        //we should be in the user section, looking at all the elements
+                        val nameFromDB = userSnapshot.child("name").value
+                        //we need to have the name of the lieu to compare : ex : Lieu1 instead of Colonne...
+                        if(currentActivity.name==nameFromDB){
+                            idVisit = userSnapshot.key.toString()
+                            val visited = userSnapshot.child("visited").value.toString()
+                            if(Integer.valueOf(visited) ==1){
+                                isLieuVisited = true
+                            }
+                            break
+                        }
+                    }
+                    if(isLieuVisited){
+                        //we put it to not visited by setting "visited" to 0
+                        val unvisitLieu = database.child("Saved_lieu").child(username).child(idVisit)
+                        Log.i(TAG, unvisitLieu.toString())
+                        val unvisitTask = unvisitLieu.child("visited").setValue(0)
+                        unvisitTask.addOnSuccessListener {
+                            Toast.makeText(applicationContext,"Place removed from visited", Toast.LENGTH_SHORT).show()
+                        }.addOnFailureListener{
+                            Toast.makeText(applicationContext,"Removing from visited failed", Toast.LENGTH_SHORT).show()
+                        }
+
+
+                        //we remove one visit from this place
+                        //in "Lieu", the attribute "nbVisit" need to be nbVisit -1
+                        var idPlace = ""
+                        val LieuRef = database.child("Lieu")
+                        //looping through this Lieu until we find one with the correct name
+                        LieuRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                for (userSnapshot in dataSnapshot.children) {
+                                    //we should be in the user section, looking at all the elements
+                                    val nameFromDB = userSnapshot.child("name").value
+                                    //we need to have the name of the lieu to compare : ex : Lieu1 instead of Colonne...
+                                    if(currentActivity.name==nameFromDB){
+                                        idPlace = userSnapshot.key.toString()
+                                        break
+                                    }
+                                }
+                                val lieu = database.child("Lieu").child(idPlace)
+                                val nbVisit = dataSnapshot.child(idPlace).child("nbVisit").value.toString()
+                                val nbVisitUpdated = Integer.valueOf(nbVisit) -1
+                                val minusOneTask = lieu.child("nbVisit").setValue(nbVisitUpdated)
+                                minusOneTask.addOnSuccessListener {
+                                    Toast.makeText(applicationContext,"Visit removed from counter", Toast.LENGTH_SHORT).show()
+                                }.addOnFailureListener{
+                                    Toast.makeText(applicationContext,"Removing from counter failed", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                            override fun onCancelled(databaseError: DatabaseError) {
+                                TODO("Not yet implemented")
+                            }
+                        })
+                    }
+                    else{
+                        //we set the value of "visited" to 1 to indicate that it has been visited
+                        val visitLieu = database.child("Saved_lieu").child(username).child(idVisit)
+                        //Log.i(TAG, visitLieu.toString()) in Samsam but not in idVisit
+                        val visitTask = visitLieu.child("visited").setValue(1)
+                        //Toast.makeText(applicationContext,"Place added to visited", Toast.LENGTH_SHORT).show()
+
+                        //we add one to "nbVisit" in "Lieu"
+                        var idPlace = ""
+                        val LieuRef = database.child("Lieu")
+                        //looping through this Lieu until we find one with the correct name
+                        LieuRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                for (userSnapshot in dataSnapshot.children) {
+                                    //we should be in the user section, looking at all the elements
+                                    val nameFromDB = userSnapshot.child("name").value
+                                    //we need to have the name of the lieu to compare : ex : Lieu1 instead of Colonne...
+                                    if(currentActivity.name==nameFromDB){
+                                        idPlace = userSnapshot.key.toString()
+                                        break
+                                    }
+                                }
+                                val lieu = database.child("Lieu").child(idPlace)
+                                val nbVisit = dataSnapshot.child(idPlace).child("nbVisit").value.toString()
+                                val nbVisitUpdated = Integer.valueOf(nbVisit) +1
+                                val minusOneTask = lieu.child("nbVisit").setValue(nbVisitUpdated)
+                                minusOneTask.addOnSuccessListener {
+                                    Toast.makeText(applicationContext,"Visit has been added to counter", Toast.LENGTH_SHORT).show()
+                                }.addOnFailureListener{
+                                    Toast.makeText(applicationContext,"Adding to counter failed", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                            override fun onCancelled(databaseError: DatabaseError) {
+                                TODO("Not yet implemented")
+                            }
+                        })
+
                     }
                 }
                 override fun onCancelled(databaseError: DatabaseError) {
