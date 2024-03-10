@@ -26,6 +26,8 @@
     </string-array>
 
     <string name="landmarkBtn">Mark the landmark as visited</string>
+    <string name="visitedLandmark">Forget this place</string>
+
     <string name="detailOverview">Overview</string>
     <string name="detailHistory">History</string>
     <string name="detailConditions">Conditions</string>
