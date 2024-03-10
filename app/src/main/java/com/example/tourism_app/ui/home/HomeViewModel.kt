@@ -20,17 +20,59 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent {
+class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent, ActivityRecyclerAdapter.LikeButtonClickListener {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var activityList: ArrayList<Activity>
     private lateinit var fragment: HomeFragment
     private lateinit var database: DatabaseReference
     lateinit var username: String
+    private lateinit var adapter: ActivityRecyclerAdapter
 
     override fun onItemClick(position: Int) {
         val activity = activityList[position]
         openDetailsActivity(activity)
+    }
+
+    override fun onLikeButtonClicked(position: Int, currentItem: Activity) {
+        //we need the pseudo to save it at the right place
+        //if already saved then delete it otherwise create new element in bdd
+        val database = FirebaseDatabase.getInstance().reference
+        //in the branch of the user :
+        var idDelete = ""
+        val savedlieuref = database.child("Saved_lieu").child(username)
+
+        savedlieuref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                var isLieuLiked = false
+                for (userSnapshot in dataSnapshot.children) {
+                    //we should be in the user section, looking at all the elements
+                    val nameFromDB = userSnapshot.child("name").value
+                    //we need to have the name of the lieu to compare : ex : Lieu1 instead of Colonne...
+                    if(currentItem.name == nameFromDB){
+                        isLieuLiked = true
+                        idDelete = userSnapshot.key.toString()
+                        break
+                    }
+                }
+                if(isLieuLiked) {
+                    //we delete the element
+                    val deleteLieu = database.child("Saved_lieu").child(username).child(idDelete)
+                    val deleteTask = deleteLieu.removeValue()
+                }
+                else {
+                    //we create liked lieu element
+                    val newUserRef = savedlieuref.push()
+                    newUserRef.child("name").setValue(currentItem.name)
+                    newUserRef.child("visited").setValue(0)
+                }
+                adapter.notifyItemChanged(position)
+
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+
+            }
+        })
     }
 
     fun setupViews(binding: FragmentHomeBinding, homeFragment: HomeFragment, user: String) {
@@ -101,7 +143,9 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
                         val activity = activitySnapshot.getValue(Activity::class.java)
                         activityList.add(activity!!)
                     }
-                    activityRecyclerView.adapter = ActivityRecyclerAdapter(activityList, this@HomeViewModel, user)
+                    adapter = ActivityRecyclerAdapter(activityList,
+                        this@HomeViewModel, user, this@HomeViewModel)
+                    activityRecyclerView.adapter = adapter
                 }
         }
 
