@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.tourism_app.DatabaseManager
 import com.example.tourism_app.DetailsActivity
 import com.example.tourism_app.MainActivity
 import com.example.tourism_app.data.Activity
@@ -20,7 +21,10 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent, ActivityRecyclerAdapter.LikeButtonClickListener {
+class HomeViewModel :
+    ViewModel(),
+    ActivityRecyclerAdapter.ActivityRecyclerEvent,
+    ActivityRecyclerAdapter.LikeButtonClickListener {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var activityList: ArrayList<Activity>
@@ -35,44 +39,8 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
     }
 
     override fun onLikeButtonClicked(position: Int, currentItem: Activity) {
-        //we need the pseudo to save it at the right place
-        //if already saved then delete it otherwise create new element in bdd
-        val database = FirebaseDatabase.getInstance().reference
-        //in the branch of the user :
-        var idDelete = ""
-        val savedlieuref = database.child("Saved_lieu").child(username)
-
-        savedlieuref.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                var isLieuLiked = false
-                for (userSnapshot in dataSnapshot.children) {
-                    //we should be in the user section, looking at all the elements
-                    val nameFromDB = userSnapshot.child("name").value
-                    //we need to have the name of the lieu to compare : ex : Lieu1 instead of Colonne...
-                    if(currentItem.name == nameFromDB){
-                        isLieuLiked = true
-                        idDelete = userSnapshot.key.toString()
-                        break
-                    }
-                }
-                if(isLieuLiked) {
-                    //we delete the element
-                    val deleteLieu = database.child("Saved_lieu").child(username).child(idDelete)
-                    val deleteTask = deleteLieu.removeValue()
-                }
-                else {
-                    //we create liked lieu element
-                    val newUserRef = savedlieuref.push()
-                    newUserRef.child("name").setValue(currentItem.name)
-                    newUserRef.child("visited").setValue(0)
-                }
-                adapter.notifyItemChanged(position)
-
-            }
-            override fun onCancelled(databaseError: DatabaseError) {
-
-            }
-        })
+        DatabaseManager.updateLikedActivity(username, currentItem.name!!, fragment.requireContext()
+        ) { adapter.notifyItemChanged(position) }
     }
 
     fun setupViews(binding: FragmentHomeBinding, homeFragment: HomeFragment, user: String) {
@@ -176,7 +144,7 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
         val intent = Intent(fragment.context, DetailsActivity::class.java)
         intent.putExtra("activityKey", activity)
         intent.putExtra("username",username)
-        fragment.context?.startActivity(intent)
+        fragment.requireContext().startActivity(intent)
     }
 
     private fun setupUserPicInteractivity() {
