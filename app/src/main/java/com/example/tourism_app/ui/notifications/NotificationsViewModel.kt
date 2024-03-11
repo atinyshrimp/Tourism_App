@@ -65,16 +65,15 @@ class NotificationsViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecy
             false)
 
         // initializing the list of categories
-        //visitedList = arrayListOf()
-        //readVisitData(visitedList, visitRecyclerView, pseudo)
+        visitedList = arrayListOf()
+        readVisitData(pseudo)
 
 
         // make the user pic lead to Profile Fragment
         setupUserPicInteractivity()
 
     }
-   /* private fun readVisitData(categoryList: ArrayList<Activity>,
-                              visitRecyclerView: RecyclerView, pseudo: String
+    private fun readVisitData(pseudo: String
     ) {
         //we need to know the name of the profile first to be in the right subsection
         //it is the parameter pseudo
@@ -92,8 +91,8 @@ class NotificationsViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecy
                     visitedList.clear()
                     for (clientSnapshot in snapshot.children) {
                         //check if has been visited
-                        val visit = clientSnapshot.child("visited").value.toString()
-                        if(Integer.valueOf(visit)==1){
+                        val visit = clientSnapshot.child("visited").value
+                        if(visit != null && Integer.valueOf(visit.toString())==1){
                             //we get the name of one of the favorite place
                             val nameFromDB = clientSnapshot.child("name").value
                             //we need to locate it in the "Lieu" part of the database now to retrieve all the data
@@ -126,7 +125,7 @@ class NotificationsViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecy
                 TODO("Not yet implemented")
             }
         })
-    }*/
+    }
 
     private fun getActivityData(pseudo : String) {
         readData(pseudo)
