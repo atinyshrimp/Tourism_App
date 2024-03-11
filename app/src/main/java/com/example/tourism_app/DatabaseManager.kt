@@ -78,6 +78,7 @@ class DatabaseManager {
             savedlieuref.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     var isLieuLiked = false
+                    var isLieuVisited = false
                     for (userSnapshot in dataSnapshot.children) {
                         //we should be in the user section, looking at all the elements
                         val nameFromDB = userSnapshot.child("name").value
@@ -85,12 +86,48 @@ class DatabaseManager {
                         if(activityName == nameFromDB){
                             isLieuLiked = true
                             idDelete = userSnapshot.key.toString()
+                            val visited = userSnapshot.child("visited").value
+                            if (visited != null && Integer.valueOf(visited.toString()) ==1) {
+                                isLieuVisited = true
+                            }
                             break
                         }
                     }
                     if (isLieuLiked) {
                         //we delete the element
                         val deleteLieu = databaseReference.child("Saved_lieu").child(username).child(idDelete)
+                        //first we check if the place is visited because if so we need to decrement the "nbVisit" in said place
+                        if(isLieuVisited){
+                            //in "Lieu", the attribute "nbVisit" need to be nbVisit -1
+                            var idPlace = ""
+                            val LieuRef = databaseReference.child("Lieu")
+                            //looping through this Lieu until we find one with the correct name
+                            LieuRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                    for (userSnapshot in dataSnapshot.children) {
+                                        //we should be in the user section, looking at all the elements
+                                        val nameFromDB = userSnapshot.child("name").value
+                                        //we need to have the name of the lieu to compare : ex : Lieu1 instead of Colonne...
+                                        if (activityName == nameFromDB) {
+                                            idPlace = userSnapshot.key.toString()
+                                            break
+                                        }
+                                    }
+                                    val lieu = databaseReference.child("Lieu").child(idPlace)
+                                    val nbVisit = dataSnapshot.child(idPlace).child("nbVisit").value.toString()
+                                    val nbVisitUpdated = Integer.valueOf(nbVisit) -1
+                                    val minusOneTask = lieu.child("nbVisit").setValue(nbVisitUpdated)
+                                    minusOneTask.addOnSuccessListener {
+                                        Toast.makeText(applicationContext,"Visit removed from counter", Toast.LENGTH_SHORT).show()
+                                    }.addOnFailureListener{
+                                        Toast.makeText(applicationContext,"Removing from counter failed", Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                                override fun onCancelled(databaseError: DatabaseError) {
+
+                                }
+                            })
+                        }
                         val deleteTask = deleteLieu.removeValue()
                         deleteTask.addOnSuccessListener {
                             Toast.makeText(applicationContext,"Place removed from favorites", Toast.LENGTH_SHORT).show()
