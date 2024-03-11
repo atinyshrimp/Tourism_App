@@ -80,7 +80,7 @@ All of the picture are png : allow us to only have one type of extension which i
 ### Retrieval of Firebase data in Android Studio
 
 After both the Firebase realtime database and the cloud storage were set, I needed to retrieve the data stored in those from Android Studio.
-To do so, I used Firebase functions such as "setValue()" to modify, "removeValue()" to delete or simply "value" to retrieve the data. The main issue was really understanding all that had already been done in the activities and the fragments to be able to retrieve the data appropriately. The structure of the database being well-thought, it was fairly easy to retrieve the data.
+To do so, I used Firebase functions such as "setValue()" to modify, "removeValue()" to delete or simply "value" to retrieve the data. 
 I took care of the retrieval of the Lieu data for the Details and Home fragment. I also took care of the retrieval of all the pictures for Home and Details : picture of the place, of the categories, of the transports, ...
 
 ### Liked and visited places tab
@@ -93,6 +93,13 @@ The user can like and dislike places, and if he marks a place as visited, this w
 This last action not only updates the user settings but also the place settings : the number of visit is decreased when a place is "unvisited" (and increased when visited obviously).
 
 ![image](https://github.com/atinyshrimp/Tourism_App/assets/103419843/59aaa59b-66a3-49e1-ad63-0e2330e29017)
+
+### Challenges & Takeaways
+
+At first it was pretty hard getting familiar with Firebase especially to understad how to retrieve the data in the best way possible.
+A lot of thought was put into the structure of the database (which is a bit different than the one I have been used to in SQL) and it was modified a lot to best suit our need.
+In the end when that structure was good and the retrieval of the data in Android Studio had been understood, it was fairly easy to retrieve the rest of the data.
+The main issue was really understanding all that had already been done in the activities and the fragments to be able to retrieve the data appropriately. Indeed, while I was creating all the structure of the database in Firebase, my teammates were working on Android Studio, and being able to understand all the links between all the activities that had been created in the meantime was pretty tough. Undesrtanding it all took a bit of time but once it was done, it went pretty smoothly.
 
 
 
