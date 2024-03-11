@@ -27,16 +27,16 @@
 
             <TextView
                 android:id="@+id/tvName"
-                android:layout_width="150dp"
-                android:layout_height="35dp"
+                android:layout_width="161dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="14dp"
                 android:gravity="bottom"
                 android:maxWidth="115dp"
                 android:text="Title"
                 android:textAlignment="viewStart"
                 android:textColor="@color/black"
-                android:textSize="25sp"
+                android:textSize="22sp"
                 app:layout_constraintStart_toEndOf="@+id/ivPicture"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="RtlCompat" />
@@ -61,13 +61,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginTop="2dp"
                 android:layout_weight="0"
-                android:text="Metros"
+                android:text="Lieu"
                 android:textAlignment="textEnd"
                 android:textColor="@color/gold"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/ivPicture"
                 app:layout_constraintTop_toBottomOf="@+id/tvName"
                 app:layout_constraintVertical_bias="0.205" />
@@ -77,7 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="10dp"
                 android:layout_weight="0"
                 android:text="Category"
                 android:textAlignment="textEnd"
@@ -85,8 +84,8 @@
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/ivPicture"
-                app:layout_constraintTop_toBottomOf="@+id/tvName"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintTop_toBottomOf="@+id/tvLocation"
+                app:layout_constraintVertical_bias="0.225" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
