@@ -11,7 +11,7 @@ import java.util.Locale
 
 class DatabaseManager {
     companion object {
-        // Assume you have a reference to your Firebase database
+
         private val databaseReference: DatabaseReference = FirebaseDatabase.getInstance().reference
 
         // Static method to check if the activity is liked/saved by the user
@@ -265,6 +265,34 @@ class DatabaseManager {
                 }
                 override fun onCancelled(databaseError: DatabaseError) {
 
+                }
+            })
+        }
+
+        fun getVisitDate(username: String, activityName: String, callback: (String?) -> Unit) {
+            val savedLieuRef = databaseReference.child("Saved_lieu").child(username)
+
+            savedLieuRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    var visitDate: String? = null
+
+                    for (userSnapshot in dataSnapshot.children) {
+                        val nameFromDB = userSnapshot.child("name").value
+                        val visited = userSnapshot.child("visited").getValue(Int::class.java)
+
+                        if (activityName == nameFromDB && visited == 1) {
+                            visitDate = userSnapshot.child("date").getValue(String::class.java)
+                            break
+                        }
+                    }
+
+                    // Call the callback function with the visit date
+                    callback(visitDate)
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    // Handle onCancelled
+                    callback(null) // Notify with null in case of an error
                 }
             })
         }

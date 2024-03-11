@@ -3,14 +3,13 @@ package com.example.tourism_app.ui.notifications
 import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.tourism_app.DatabaseManager
 import com.example.tourism_app.DetailsActivity
 import com.example.tourism_app.MainActivity
 import com.example.tourism_app.R
 import com.example.tourism_app.data.Activity
 import com.example.tourism_app.data.ActivityRecyclerAdapter
-import com.example.tourism_app.data.Category
+import com.example.tourism_app.data.VisitedActivityAdapter
 import com.example.tourism_app.databinding.FragmentNotificationsBinding
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.firebase.database.DataSnapshot
@@ -20,7 +19,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 
-class NotificationsViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent, ActivityRecyclerAdapter.LikeButtonClickListener  {
+class NotificationsViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent, ActivityRecyclerAdapter.LikeButtonClickListener,
+    VisitedActivityAdapter.ActivityRecyclerEvent, VisitedActivityAdapter.LikeButtonClickListener  {
     private lateinit var binding: FragmentNotificationsBinding
     private lateinit var activityList: ArrayList<Activity>
     private lateinit var visitedList: ArrayList<Activity>
@@ -31,6 +31,7 @@ class NotificationsViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecy
     private lateinit var username: String
     private lateinit var name_lieu: String
     private lateinit var adapter: ActivityRecyclerAdapter
+    private lateinit var visitAdapter: VisitedActivityAdapter
 
     override fun onItemClick(position: Int) {
         val activity = activityList[position]
@@ -117,8 +118,8 @@ class NotificationsViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecy
                             })
                         }
                     }
-                    adapter = ActivityRecyclerAdapter(visitedList, this@NotificationsViewModel, pseudo, this@NotificationsViewModel)
-                    visitRecyclerView.adapter = adapter
+                    visitAdapter = VisitedActivityAdapter(visitedList, this@NotificationsViewModel, pseudo, this@NotificationsViewModel)
+                    visitRecyclerView.adapter = visitAdapter
                 }
             }
             override fun onCancelled(error: DatabaseError) {
@@ -196,6 +197,9 @@ class NotificationsViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecy
 
     private fun updateRecyclerView(position: Int) {
         adapter.notifyItemChanged(position)
+        visitAdapter.notifyItemChanged(position)
+        readData(username)
+        readVisitData(username)
         // find a way to update the list, like remove the card that's been unliked from the recyclerview
     }
 

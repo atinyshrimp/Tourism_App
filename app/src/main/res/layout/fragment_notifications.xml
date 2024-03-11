@@ -130,7 +130,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/visitedList"
             android:layout_width="match_parent"
-            android:layout_height="245dp"
+            android:layout_height="300dp"
             android:layout_marginTop="10dp" />
 
     </LinearLayout>
