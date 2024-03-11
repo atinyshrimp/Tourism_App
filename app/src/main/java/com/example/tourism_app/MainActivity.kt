@@ -1,6 +1,7 @@
 package com.example.tourism_app
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.tourism_app.databinding.ActivityMain2Binding
@@ -14,14 +15,16 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMain2Binding
     lateinit var navbarView: BottomNavigationView
-    lateinit var pseudo : String
+
+    private lateinit var pseudo : String
+    private lateinit var mail : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        mail = intent.getStringExtra("mail").toString()
         pseudo = intent.getStringExtra("pseudo").toString()
         val notificationsFragment = NotificationsFragment.newInstance(pseudo)
         // default fragment is Home
@@ -33,8 +36,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home -> replaceFragment(HomeFragment(pseudo))
                 R.id.navigation_dashboard -> replaceFragment(DashboardFragment())
                 R.id.navigation_notifications -> replaceFragment(notificationsFragment)
-                R.id.navigation_profile -> replaceFragment(ProfileFragment())
-
+                R.id.navigation_profile -> {
+                    val profileFragment = ProfileFragment.newInstance(pseudo, mail)
+                    replaceFragment(profileFragment)
+                }
                 else -> {}
             }
             true
