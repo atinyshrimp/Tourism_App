@@ -124,3 +124,13 @@ by Joyce
     ```
     - The app wouldn't lauch because of these lines of code above
     - I ended up doing a "custom" bottom nav bar instead
+ 
+## Conclusion
+Write something here...
+
+### Honorable mentions
+*features we worked hard on even if they're not the main attraction*
+
+### Things we wish we could've done
+- Interactivity with the tab in the Home Fragment
+- SearchView when clicking on the categories
