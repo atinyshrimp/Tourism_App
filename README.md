@@ -86,6 +86,7 @@ I took care of the retrieval of the Lieu data for the Details and Home fragment.
 ### Liked and visited places tab
 
 This page essentially uses the "Saved_lieu" part of the database to correlate a user and the places he liked and visited.
+For this tab, to display the name of the user (and then use it to display the liked and visited places), I retrieved the pseudo from the login to be able to use it in this fragment.
 The first part of this tab displays the places that the user liked and the second part, the places he visited. 
 With this part, I took care of the logic behind liking and visiting places from Details, Home or Like tabs : the Firebase database updates when those actions are done.
 The user can like and dislike places, and if he marks a place as visited, this will record the date of the visit. He can always change his mind by "Disliking" or "Forgetting a place".
