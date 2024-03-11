@@ -92,7 +92,7 @@ With this part, I took care of the logic behind liking and visiting places from 
 The user can like and dislike places, and if he marks a place as visited, this will record the date of the visit. He can always change his mind by "Disliking" or "Forgetting a place".
 This last action not only updates the user settings but also the place settings : the number of visit is decreased when a place is "unvisited" (and increased when visited obviously).
 
-![image](https://github.com/atinyshrimp/Tourism_App/assets/103419843/59aaa59b-66a3-49e1-ad63-0e2330e29017)
+![image](https://github.com/atinyshrimp/Tourism_App/assets/103419843/c52200e1-c82a-43ea-8af3-7f5d9db4869e)
 
 ### Challenges & Takeaways
 
