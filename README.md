@@ -41,7 +41,16 @@ by Auriane
 
 
 ## Database Management
-by Salomé
+by Salomé 
+
+### Tasks
+- Set up Firebase
+- Create the Firebase database and cloud storage
+- Code the retrieval of Firebase resources in Android Studio for the Home and Details Fragment
+- Code the ***Like*** tab to display liked and visited places
+
+### Setting up Firebase and its Realtime Database and Cloud Storage
+
 To manage all the data associated with the places, we decided to use Firebase. I created the project on Firebase and set it up. I linked the Firebase project to the Android Studio project.
 Then I created a realtime database in Firebase, designed a structure to hold all of the data we needed and access it easily.
 This database has 3 main parts : Client, Lieu and Saved_lieu. 
@@ -63,14 +72,27 @@ To do that, we also organised this part in 3 parts : LieuImage, Transport and Ca
 ![image](https://github.com/atinyshrimp/Tourism_App/assets/103419843/c4c82d48-8c45-4fbe-a8cc-b5f1ecf46165)
 
 LieuImage holds every picture of every place present in the database.
-
 Transport is subdivised in smaller category to separate every kind of transport : bus, rer, train and subway.
-
 And Category simply holds the pictures for the cateogories : events, museum, garden,...
-
 Every file uploaded in the cloud storage is very precisely named and placed in order to retrieve it easily. 
-
 All of the picture are png : allow us to only have one type of extension which is easier for retrieval.
+
+### Retrieval of Firebase data in Android Studio
+
+After both the Firebase realtime database and the cloud storage were set, I needed to retrieve the data stored in those from Android Studio.
+To do so, I used Firebase functions such as "setValue()" to modify, "removeValue()" to delete or simply "value" to retrieve the data. The main issue was really understanding all that had already been done in the activities and the fragments to be able to retrieve the data appropriately. The structure of the database being well-thought, it was fairly easy to retrieve the data.
+I took care of the retrieval of the Lieu data for the Details and Home fragment. I also took care of the retrieval of all the pictures for Home and Details : picture of the place, of the categories, of the transports, ...
+
+### Liked and visited places tab
+
+This page essentially uses the "Saved_lieu" part of the database to correlate a user and the places he liked and visited.
+The first part of this tab displays the places that the user liked and the second part, the places he visited. 
+With this part, I took care of the logic behind liking and visiting places from Details, Home or Like tabs : the Firebase database updates when those actions are done.
+The user can like and dislike places, and if he marks a place as visited, this will record the date of the visit. He can always change his mind by "Disliking" or "Forgetting a place".
+This last action not only updates the user settings but also the place settings : the number of visit is decreased when a place is "unvisited" (and increased when visited obviously).
+
+![image](https://github.com/atinyshrimp/Tourism_App/assets/103419843/59aaa59b-66a3-49e1-ad63-0e2330e29017)
+
 
 
 ## Activity Details
