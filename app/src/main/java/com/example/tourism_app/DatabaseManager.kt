@@ -69,10 +69,6 @@ class DatabaseManager {
             })
         }
 
-        fun getVisitCount(activityName: String): Int {
-            return 0
-        }
-
         fun updateLikedActivity(username: String, activityName: String, applicationContext: Context, method: () -> Unit) {
             //we need the pseudo to save it at the right place
             //if already saved then delete it otherwise create new element in bdd

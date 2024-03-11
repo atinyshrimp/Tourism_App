@@ -38,7 +38,7 @@ class ActivityRecyclerAdapter(
         holder.name.text = currentItem.name
         holder.category.text = currentItem.category
         holder.location.text = "Paris ${currentItem.getArrondissement()}"
-        holder.visitCount.text = "(51)"
+        holder.visitCount.text = "(${currentItem.nbVisit.toString()})"
 
         var imageName = currentItem.name
         if(imageName != null) {

@@ -26,6 +26,7 @@ data class Activity(
     var name: String? = null,
     var description: String? = null,
     var transport: Transport? = null,
+    var nbVisit: Int? = null,
     var url: String? = null
 ): Parcelable {
     constructor(parcel: Parcel) : this(
@@ -36,6 +37,7 @@ data class Activity(
         parcel.readString(),
         parcel.readString(),
         parcel.readParcelable(Transport::class.java.classLoader),
+        parcel.readInt(),
         parcel.readString()
     )
 
@@ -47,6 +49,7 @@ data class Activity(
         parcel.writeString(name)
         parcel.writeString(description)
         parcel.writeParcelable(transport, flags)
+        parcel.writeInt(nbVisit!!)
         parcel.writeString(url)
     }
 
