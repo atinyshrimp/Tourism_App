@@ -46,15 +46,17 @@ To manage all the data associated with the places, we decided to use Firebase. I
 Then I created a realtime database in Firebase, designed a structure to hold all of the data we needed and access it easily.
 This database has 3 main parts : Client, Lieu and Saved_lieu. 
 Client holds the users credentials and are used for authentification.
-![image](https://github.com/atinyshrimp/Tourism_App/assets/103419843/3f2e3b88-f672-4157-a3f2-5ce7d71fb4f8)
+![image](https://github.com/atinyshrimp/Tourism_App/assets/103419843/1002cd3b-2bee-4e1a-a0c0-111ff124e5ca)
+
 Lieu holds all of the data of each of the places : their name, description, transport info, conditions for free access, number of visits, ...
-![image](https://github.com/atinyshrimp/Tourism_App/assets/103419843/2ec2c93b-cdf0-4e5d-8a32-90529f95fb1d)
+![image](https://github.com/atinyshrimp/Tourism_App/assets/103419843/e7b817de-87db-46a7-93e3-0a796c3a9fd5)
 Saved_lieu is the link between the two other "tables". It holds for every person, the places this person has liked and if they visited it or not
-![image](https://github.com/atinyshrimp/Tourism_App/assets/103419843/eaa37521-0237-4c2a-8ae8-4edff6483a40)
+![image](https://github.com/atinyshrimp/Tourism_App/assets/103419843/091b49a6-bec0-429a-934c-23a96f2fb472)
 
 Another important side of firebase is the cloud storage. Since we are displaying places, we need pictures of those places, and for a nicer UI, we also decided to use pictures to display the transport numbers/letters.
 To do that, we also organised this part in 3 parts : LieuImage, Transport and Category.
-![image](https://github.com/atinyshrimp/Tourism_App/assets/103419843/727b728b-ac79-4174-bd13-9db45d9632cf)
+![image](https://github.com/atinyshrimp/Tourism_App/assets/103419843/c4c82d48-8c45-4fbe-a8cc-b5f1ecf46165)
+
 LieuImage holds every picture of every place present in the database.
 Transport is subdivised in smaller category to separate every kind of transport : bus, rer, train and subway.
 
