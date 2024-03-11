@@ -5,6 +5,9 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import com.google.firebase.database.*
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class DatabaseManager {
     companion object {
@@ -143,6 +146,7 @@ class DatabaseManager {
                         val unvisitLieu = databaseReference.child("Saved_lieu").child(username).child(idVisit)
                         Log.i(ContentValues.TAG, unvisitLieu.toString())
                         val unvisitTask = unvisitLieu.child("visited").setValue(0)
+                        val deleteTask = unvisitLieu.child("date").removeValue()
                         unvisitTask.addOnSuccessListener {
                             Toast.makeText(applicationContext,"Place removed from visited", Toast.LENGTH_SHORT).show()
                         }.addOnFailureListener {
@@ -186,6 +190,11 @@ class DatabaseManager {
                         val visitLieu = databaseReference.child("Saved_lieu").child(username).child(idVisit)
                         //Log.i(TAG, visitLieu.toString()) in Samsam but not in idVisit
                         val visitTask = visitLieu.child("visited").setValue(1)
+                        //on ajoute un attribut avec la date de la visite
+                        val calendar = Calendar.getInstance()
+                        val simpleDateFormat = SimpleDateFormat("dd/MM/YY", Locale.getDefault())
+                        val dateTask = visitLieu.child("date").setValue(simpleDateFormat.format(calendar.time))
+
                         //Toast.makeText(applicationContext,"Place added to visited", Toast.LENGTH_SHORT).show()
 
                         //we add one to "nbVisit" in "Lieu"
