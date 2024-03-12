@@ -1,5 +1,6 @@
 package com.example.tourism_app.ui.notifications
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,7 +30,6 @@ class NotificationsViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecy
     private lateinit var database2: DatabaseReference
     private lateinit var database3: DatabaseReference
     private lateinit var username: String
-    private lateinit var name_lieu: String
     private lateinit var adapter: ActivityRecyclerAdapter
     private lateinit var visitAdapter: VisitedActivityAdapter
 
@@ -101,6 +101,7 @@ class NotificationsViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecy
                             //set reference in the correct place : in "Lieu"
                             database = FirebaseDatabase.getInstance().getReference("Lieu")
                             database.addValueEventListener(object : ValueEventListener{
+                                @SuppressLint("NotifyDataSetChanged")
                                 override fun onDataChange(snapshot: DataSnapshot){
                                     //we will look at every children of Lieu to see if it is the Lieu with the correct name
                                     for (userSnapshot in snapshot.children) {
@@ -154,6 +155,7 @@ class NotificationsViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecy
                         //set reference in the correct place : in "Lieu"
                         database = FirebaseDatabase.getInstance().getReference("Lieu")
                         database.addValueEventListener(object : ValueEventListener{
+                            @SuppressLint("NotifyDataSetChanged")
                             override fun onDataChange(snapshot: DataSnapshot){
                                 //we will look at every children of Lieu to see if it is the Lieu with the correct name
                                 for (userSnapshot in snapshot.children) {

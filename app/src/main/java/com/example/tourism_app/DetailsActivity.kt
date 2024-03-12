@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +27,10 @@ class DetailsActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setup()
+    }
+
+    private fun setup() {
         binding = DetailsActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -60,6 +65,7 @@ class DetailsActivity: AppCompatActivity() {
 
             override fun onTabReselected(tab: TabLayout.Tab?) { }
         })
+
     }
 
     private fun replaceFragment(fragment: Fragment) {
@@ -73,7 +79,7 @@ class DetailsActivity: AppCompatActivity() {
     private fun setButtonIcons() {
         val likeBtn = binding.ibLikeBtn
         val visitBtn: Button = binding.visitBtn
-        DatabaseManager.isActivityLiked(username, currentActivity.name!!) {isLiked ->
+        DatabaseManager.isActivityLiked(username, currentActivity.name!!) { isLiked ->
             if (isLiked) {
                 likeBtn.setImageResource(R.drawable.ic_heart_filled_black_24dp)
                 visitBtn.visibility = View.VISIBLE
@@ -97,6 +103,8 @@ class DetailsActivity: AppCompatActivity() {
         }
         likeBtn.invalidate()
         visitBtn.invalidate()
+
+        Log.e("DetailsActivity", "Buttons set up")
     }
 
     @SuppressLint("SetTextI18n")
