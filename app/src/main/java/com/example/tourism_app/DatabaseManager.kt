@@ -87,7 +87,7 @@ class DatabaseManager {
                             isLieuLiked = true
                             idDelete = userSnapshot.key.toString()
                             val visited = userSnapshot.child("visited").value
-                            if (visited != null && Integer.valueOf(visited.toString()) ==1) {
+                            if ((visited != null) && (Integer.valueOf(visited.toString()) == 1)) {
                                 isLieuVisited = true
                             }
                             break

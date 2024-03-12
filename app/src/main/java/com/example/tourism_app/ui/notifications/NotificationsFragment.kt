@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.tourism_app.databinding.FragmentNotificationsBinding
 
-class NotificationsFragment : Fragment() {
+class NotificationsFragment(
+    private val pseudo: String
+) : Fragment() {
 
 
     private var _binding: FragmentNotificationsBinding? = null
@@ -29,27 +31,9 @@ class NotificationsFragment : Fragment() {
         _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-
-        //getting the pseudo of the user
-        val b = arguments
-        val pseudo = b?.getString("pseudo", "null")
-        binding.username.text = pseudo
-
-        notificationsViewModel.setupViews(binding, this, pseudo!!)
-
+        notificationsViewModel.setupViews(binding, this, pseudo)
 
         return root
-    }
-
-    companion object {
-        fun newInstance(pseudo: String): NotificationsFragment {
-            val f = NotificationsFragment()
-            // Pass index input as an argument.
-            val b = Bundle()
-            b.putString("pseudo", pseudo)
-            f.arguments = b
-            return f
-        }
     }
 
     override fun onDestroyView() {

@@ -39,8 +39,8 @@ class NotificationsViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecy
     }
 
     override fun onLikeButtonClicked(position: Int, currentItem: Activity) {
-        DatabaseManager.updateLikedActivity(username, currentItem.name!!, fragment.requireContext()
-        ) { updateRecyclerView(position) }
+        DatabaseManager.updateLikedActivity(username, currentItem.name!!, fragment.requireContext())
+        { updateRecyclerViews(position) }
     }
 
 
@@ -48,6 +48,8 @@ class NotificationsViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecy
         fragment = notificationsFragment
         this.binding = binding
         username = pseudo
+
+        binding.username.text = username
 
         // getting values for the Activity recycler view
         val activityRecyclerView = binding.activityList
@@ -57,7 +59,7 @@ class NotificationsViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecy
 
         // initializing the list of activities
         activityList = arrayListOf()
-        getActivityData(pseudo)
+        getActivityData()
 
         // getting values for the visit recycler view
         val visitRecyclerView = binding.visitedList
@@ -67,15 +69,14 @@ class NotificationsViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecy
 
         // initializing the list of categories
         visitedList = arrayListOf()
-        readVisitData(pseudo)
+        readVisitData()
 
 
         // make the user pic lead to Profile Fragment
         setupUserPicInteractivity()
 
     }
-    private fun readVisitData(pseudo: String
-    ) {
+    private fun readVisitData() {
         //we need to know the name of the profile first to be in the right subsection
         //it is the parameter pseudo
 
@@ -83,7 +84,7 @@ class NotificationsViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecy
         //we will retrieve data from the Saved_lieu part of the database and specifically for our current user (using pseudo)
 
         val visitRecyclerView = binding.visitedList
-        database3 = FirebaseDatabase.getInstance().getReference("Saved_lieu").child(pseudo)
+        database3 = FirebaseDatabase.getInstance().getReference("Saved_lieu").child(username)
         database3.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot){
 
@@ -112,28 +113,29 @@ class NotificationsViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecy
                                             visitRecyclerView.adapter?.notifyDataSetChanged()
                                         }
                                     }
+
+                                    visitAdapter = VisitedActivityAdapter(visitedList, this@NotificationsViewModel, username, this@NotificationsViewModel)
+                                    visitRecyclerView.adapter = visitAdapter
                                 }
                                 override fun onCancelled(error: DatabaseError) {
-                                    TODO("Not yet implemented")
+
                                 }
                             })
                         }
                     }
-                    visitAdapter = VisitedActivityAdapter(visitedList, this@NotificationsViewModel, pseudo, this@NotificationsViewModel)
-                    visitRecyclerView.adapter = visitAdapter
                 }
             }
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+
             }
         })
     }
 
-    private fun getActivityData(pseudo : String) {
-        readData(pseudo)
+    private fun getActivityData() {
+        readData()
     }
 
-    private fun readData(pseudo : String) {
+    private fun readData() {
         //we need to know the name of the profile first to be in the right subsection
         //it is the parameter pseudo
 
@@ -141,7 +143,7 @@ class NotificationsViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecy
         //we will retrieve data from the Saved_lieu part of the database and specifically for our current user (using pseudo)
 
         val activityRecyclerView = binding.activityList
-        database2 = FirebaseDatabase.getInstance().getReference("Saved_lieu").child(pseudo)
+        database2 = FirebaseDatabase.getInstance().getReference("Saved_lieu").child(username)
         database2.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot){
                 if(snapshot.exists()){
@@ -160,24 +162,26 @@ class NotificationsViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecy
                                 //we will look at every children of Lieu to see if it is the Lieu with the correct name
                                 for (userSnapshot in snapshot.children) {
                                     val usernameFromDB = userSnapshot.child("name").getValue(String::class.java)
-                                    if(usernameFromDB == nameFromDB){
+                                    if (usernameFromDB == nameFromDB){
                                         val activity = userSnapshot.getValue(Activity::class.java)
                                         activityList.add(activity!!)
                                         activityRecyclerView.adapter?.notifyDataSetChanged()
                                     }
                                 }
+
+                                adapter = ActivityRecyclerAdapter(activityList, this@NotificationsViewModel, username, this@NotificationsViewModel)
+                                activityRecyclerView.adapter = adapter
                             }
                             override fun onCancelled(error: DatabaseError) {
-                                TODO("Not yet implemented")
+
                             }
                         })
                     }
-                    adapter = ActivityRecyclerAdapter(activityList, this@NotificationsViewModel, pseudo, this@NotificationsViewModel)
-                    activityRecyclerView.adapter = adapter
+
                 }
             }
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+
             }
         })
     }
@@ -197,12 +201,28 @@ class NotificationsViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecy
         }
     }
 
-    private fun updateRecyclerView(position: Int) {
-        adapter.notifyItemChanged(position)
-        visitAdapter.notifyItemChanged(position)
-        readData(username)
-        readVisitData(username)
-        // find a way to update the list, like remove the card that's been unliked from the recyclerview
+    private fun updateRecyclerViews(position: Int) {
+        // Remove the unliked item from the dataset
+        val unlikedActivity = activityList.removeAt(position)
+
+        // Notify the adapter that an item has been removed
+        adapter.notifyItemRemoved(position)
+
+        // Update the visitedList as well
+        updateVisitedList(unlikedActivity.name!!)
     }
+
+    private fun updateVisitedList(activityName: String) {
+        val iterator = visitedList.iterator()
+        while (iterator.hasNext()) {
+            val activity = iterator.next()
+            if (activity.name == activityName) {
+                iterator.remove()
+            }
+        }
+        // Notify the adapter that the dataset has changed
+        visitAdapter.notifyDataSetChanged()
+    }
+
 
 }

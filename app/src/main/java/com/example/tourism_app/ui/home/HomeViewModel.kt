@@ -115,7 +115,7 @@ class HomeViewModel :
                         this@HomeViewModel, user, this@HomeViewModel)
                     activityRecyclerView.adapter = adapter
                 }
-        }
+            }
 
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
