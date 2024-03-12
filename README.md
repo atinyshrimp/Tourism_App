@@ -36,6 +36,30 @@ Our design was solely made on Figma, while taking inspiration from many designs 
 ## Authentification
 by Ali
 
+### Tasks
+- Create the Login and Register activities
+- Fetch or create the user's data
+- Verification of credentials before granting access
+- Create the Profile fragment
+- Fetch data in the Profile and modify it dynamically in the database from the app
+
+### Login and Register activities
+
+The Login activity is the startup activity. The user can enter his credentials : Username or Mail Address and Password, these are then verified by Firebase (with fast synchronisation), the app grants or denies access to the user with a small Toast popup for confirmation.
+When pressing the register button the user can access the Register page, he can then enter his information in order to join the Users dataabase. Some security conditions (like for the password) were implemented for testing purposes even though they are not necessary for this kind of project.
+Once the user's credentials are registered in the database, they can access the app through the Login page.
+
+### Profile fragment
+
+In the MainActivity, the last page is the Profile fragment, when accessing it the user is able to access their own credentials and their profile picture.
+At first there was going to be a "ranking" system, the more the user used our app the more they would rank up, but in the end we considered that it wasn't that relevant and decided to focus on the rest.
+
+### Modify data in Profile
+
+In the profile page the user can modify their credentials. By pressing the "Modify" buttons a popup TextEditor appears to allow the user to modify their credentials. These are then sent to Firebase to verify that the modification is authorised, if everything is fine the users sees their modification directly in the app.
+The modifications were effective, and the Firebase update worked surprisingly well, we didn't expect it to be that fast which was a very good thing.
+
+
 ## Geolocation
 by Auriane
 
