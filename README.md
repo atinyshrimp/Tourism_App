@@ -21,11 +21,11 @@ As the Paris Olympics approach, we thought it would be a good idea to make an ap
 |Activity Details|Joyce|
 
 ### App preview
-- Feature 1 \
-*GIF here*
-- Feature 2 \
-*GIF here*
-- Feature 3 \
+- Create or log into an account. \
+![log into account](medias/login.gif)
+- Like and unlike places. \
+![unliking a place](medias/unlike_a_place.gif)
+- Geolocation of the different listed places. \
 *GIF here*
 
 Our design was solely made on Figma, while taking inspiration from many designs on dribbble, mostly the following:
@@ -51,10 +51,21 @@ by Joyce
 - Code the two main ***Activity*** files according to the designs
 - Code the different ***Fragment*** files according to the designs
 
-### Activity Code
+### Main Activity
+- Created an **"Activity" data class** to help storing data from Firebase
+- Used **RecyclerView** elements to efficiently represent theses activities on our UI
+    - Coded **RecyclerViewAdapter** classes to link to these RecyclerView objects
+        - Added a **like system** exclusively on the dedicated button that updates the UI directly upon interacting with it. I used **interfaces** for that purpose.
 
 
-### Fragment Code
+### Details Activity
+- Worked with AppCombatActivity methods to lead the user to an external web browser
+#### Data transfer
+- Made the "Activity" class **Parcelable** in order to transfer data from an Activity to another.
+#### Overview fragment
+- Worked with **java.Calendar** (???) to show schedules and a place's opening status according to the current time. \
+    ![schedules](medias/details_schedules.gif)
+
 
 ### Challenges & Takeaways
 - Working with the default BottomNavView provided by AndroidStudio
