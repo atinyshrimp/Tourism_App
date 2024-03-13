@@ -10,7 +10,6 @@ Goal: In a team of 4, make an app, preferably tourism/education-themed, from scr
 - [Conclusion](#conclusion)
 
 ## Overview
-
 As the Paris Olympics approach, we thought it would be a good idea to make an app that lists most ***FREE*** activities accessible within Paris, to make discovering the French capital easier to tourists.
 
 ### Task Distribution
@@ -152,8 +151,11 @@ by Joyce
 ### Details Activity
 - Worked with AppCombatActivity methods to lead the user to an external web browser. \
 ![url opens the browser](medias/url_open_browser.gif)
+- Dynamically changed the state of the buttons after interacting with them (Like & "Mark this landmark as visited" buttons)
+
 #### Data transfer
 - Made the "Activity" class **Parcelable** in order to transfer data from an Activity to another.
+
 #### Overview fragment
 - Worked with **java.util.Calendar** to show schedules and a place's opening status according to the current time. 
     - Used a **HTML parser** to highlight the current day's schedule in the details.\
@@ -176,3 +178,4 @@ Write something here...
 - Interactivity with the tab in the Home Fragment, notably to filter the displayed places.
 - SearchView when clicking on the categories.
 - Interactivity with the "Share" button in the DetailsActivity.
+- Add a way for the user to choose and crop their own profile picture.
