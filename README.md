@@ -7,6 +7,7 @@ Goal: In a team of 4, make an app, preferably tourism/education-themed, from scr
 - [Geolocation](#geolocation)
 - [Database Management](#database-management)
 - [Activity Details](#activity-details)
+- [Conclusion](#conclusion)
 
 ## Overview
 
@@ -24,11 +25,11 @@ As the Paris Olympics approach, we thought it would be a good idea to make an ap
 - Create or log into an account. \
 ![log into account](medias/login.gif)
 - Like and unlike places. \
-![unliking a place](medias/unlike_a_place.gif)
+![liking a place](medias/like_a_place.gif) ![unliking a place](medias/unlike_a_place.gif)
 - Geolocation of the different listed places. \
 *GIF here*
 
-Our design was solely made on Figma, while taking inspiration from many designs on dribbble, mostly the following:
+Our design was solely made on Figma, while taking inspiration from many designs on [dribbble](https://dribbble.com/), mostly the following:
 - [Travel App Design by Anik Deb for Grapeslab](https://dribbble.com/shots/18741087-Travel-App-Design)
 - [Loka Travel App by Ceptari Tyas for Piqo Studio](https://dribbble.com/shots/16123852-Loka-Travel-App)
 - [Travel App by Listya Dwi Ariadi](https://dribbble.com/shots/15536071-Travel-App)
@@ -137,7 +138,7 @@ The main issue was really understanding all that had already been done in the ac
 by Joyce
 
 ### Tasks
-- Design the pages
+- Design the pages (Main & Details activities, associated fragments)
 - Code the two main ***Activity*** files according to the designs
 - Code the different ***Fragment*** files according to the designs
 
@@ -149,11 +150,13 @@ by Joyce
 
 
 ### Details Activity
-- Worked with AppCombatActivity methods to lead the user to an external web browser
+- Worked with AppCombatActivity methods to lead the user to an external web browser. \
+![url opens the browser](medias/url_open_browser.gif)
 #### Data transfer
 - Made the "Activity" class **Parcelable** in order to transfer data from an Activity to another.
 #### Overview fragment
-- Worked with **java.Calendar** (???) to show schedules and a place's opening status according to the current time. \
+- Worked with **java.util.Calendar** to show schedules and a place's opening status according to the current time. 
+    - Used a **HTML parser** to highlight the current day's schedule in the details.\
     ![schedules](medias/details_schedules.gif)
 
 
@@ -169,9 +172,7 @@ by Joyce
 ## Conclusion
 Write something here...
 
-### Honorable mentions
-*features we worked hard on even if they're not the main attraction*
-
-### Things we wish we could've done
-- Interactivity with the tab in the Home Fragment
-- SearchView when clicking on the categories
+### Possible ameliorations
+- Interactivity with the tab in the Home Fragment, notably to filter the displayed places.
+- SearchView when clicking on the categories.
+- Interactivity with the "Share" button in the DetailsActivity.
