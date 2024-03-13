@@ -24,8 +24,9 @@ data class Activity(
     var condition_free: String? = null,
     var hours: Hours? = null,
     var name: String? = null,
-    var reason: String? = null,
+    var description: String? = null,
     var transport: Transport? = null,
+    var nbVisit: Int? = null,
     var url: String? = null
 ): Parcelable {
     constructor(parcel: Parcel) : this(
@@ -36,6 +37,7 @@ data class Activity(
         parcel.readString(),
         parcel.readString(),
         parcel.readParcelable(Transport::class.java.classLoader),
+        parcel.readInt(),
         parcel.readString()
     )
 
@@ -45,8 +47,9 @@ data class Activity(
         parcel.writeString(condition_free)
         parcel.writeParcelable(hours, flags)
         parcel.writeString(name)
-        parcel.writeString(reason)
+        parcel.writeString(description)
         parcel.writeParcelable(transport, flags)
+        parcel.writeInt(nbVisit!!)
         parcel.writeString(url)
     }
 
@@ -93,7 +96,7 @@ data class Activity(
     }
 
     fun makeTextViewClickable(textView: TextView, context: Context) {
-        if (url != null) {
+        if (!url.isNullOrBlank()) {
             val clickableSpan = object : ClickableSpan() {
                 override fun onClick(widget: View) {
                     openUrl(context)
@@ -127,6 +130,50 @@ data class Activity(
             number % 10 == 2 -> "nd"
             number % 10 == 3 -> "rd"
             else -> "th"
+        }
+    }
+
+    fun getBuses(): ArrayList<String> {
+        val array = transport?.bus?.replace("{", "")?.replace("}", "")
+
+        return when {
+            array?.contains(",") == true -> {
+                ArrayList(array.split(","))
+            }
+            else -> arrayListOf(array ?: "")
+        }
+    }
+
+    fun getRERs(): ArrayList<String> {
+        val array = transport?.rer?.replace("{", "")?.replace("}", "")
+
+        return when {
+            array?.contains(",") == true -> {
+                ArrayList(array.split(","))
+            }
+            else -> arrayListOf(array ?: "")
+        }
+    }
+
+    fun getSubways(): ArrayList<String> {
+        val array = transport?.metro?.replace("{", "")?.replace("}", "")
+
+        return when {
+            array?.contains(",") == true -> {
+                ArrayList(array.split(","))
+            }
+            else -> arrayListOf(array ?: "")
+        }
+    }
+
+    fun getTrains(): ArrayList<String> {
+        val array = transport?.train?.replace("{", "")?.replace("}", "")
+
+        return when {
+            array?.contains(",") == true -> {
+                ArrayList(array.split(","))
+            }
+            else -> arrayListOf(array ?: "")
         }
     }
 
@@ -182,9 +229,13 @@ data class Hours(
 
 data class Transport(
     var bus: String? = null,
-    var metro: String? = null
+    var metro: String? = null,
+    var rer: String? = null,
+    var train: String? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readString(),
         parcel.readString(),
         parcel.readString()
     )
@@ -192,6 +243,8 @@ data class Transport(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(bus)
         parcel.writeString(metro)
+        parcel.writeString(rer)
+        parcel.writeString(train)
     }
 
     override fun describeContents(): Int {

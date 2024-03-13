@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.text.Html
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
@@ -93,6 +94,7 @@ class OverviewViewModel: ViewModel() {
         val currentHour: Int = calendar.get(Calendar.HOUR_OF_DAY)
         val currentMinute: Int = calendar.get(Calendar.MINUTE)
         val status: TextView = binding.tvStatus
+        val hourText: TextView = binding.tvHours
 
         // Convert the current time to a single integer representing minutes since midnight
         val currentTimeInMinutes = currentHour * 60 + currentMinute
@@ -140,6 +142,7 @@ class OverviewViewModel: ViewModel() {
                 }  else {
                     status.text = "Closed"
                     status.setTextColor(ContextCompat.getColor(context, R.color.olympic_pink))
+                    hourText.visibility = View.GONE
                 }
             }
         }
@@ -152,6 +155,8 @@ class OverviewViewModel: ViewModel() {
         if (todaySchedule != "closed") {
             binding.tvHours.text = todaySchedule
         } else {
+            binding.tvStatus.text = todaySchedule
+            binding.tvStatus.setTextColor(ContextCompat.getColor(binding.root.context, R.color.olympic_pink))
             binding.tvHours.text = ""
         }
 

@@ -14,13 +14,13 @@
         android:layout_height="0dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="-5dp"
-        app:layout_constraintBottom_toBottomOf="@+id/button"
+        app:layout_constraintBottom_toBottomOf="@+id/visitBtn"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/visitBtn"
         android:layout_width="0dp"
         android:layout_height="75dp"
         android:layout_marginStart="25dp"
@@ -52,8 +52,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/image_shape"
-        app:srcCompat="@drawable/louvre_cover" />
+        app:shapeAppearanceOverlay="@style/image_shape" />
 
     <TextView
         android:id="@+id/tvActName"
@@ -135,7 +134,7 @@
     </com.google.android.material.tabs.TabLayout>
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/ibLikeBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -155,9 +154,9 @@
         android:background="@drawable/btn_background"
         android:stateListAnimator="@null"
         android:elevation="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton"
-        app:layout_constraintTop_toTopOf="@+id/imageButton"
+        app:layout_constraintBottom_toBottomOf="@+id/ibLikeBtn"
+        app:layout_constraintEnd_toStartOf="@+id/ibLikeBtn"
+        app:layout_constraintTop_toTopOf="@+id/ibLikeBtn"
         app:srcCompat="@drawable/ic_share_black_24dp" />
 
     <ImageButton

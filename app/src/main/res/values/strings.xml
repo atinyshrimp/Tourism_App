@@ -8,8 +8,11 @@
     <string name="greetings">Welcome back,</string>
     <string name="username">Jane Doe!</string>
     <string name="popCategories">Popular Categories</string>
+    <string name="visitedPlaces">Go back in time and revisit some locations</string>
     <string name="category">Category</string>
     <string name="activity_heading">Venture easily in Paris!</string>
+    <string name="activity_notifications_heading">Find your favorite places</string>
+    <string name="profile_picture_description">Profile picture</string>
     <string name="allFilter">All</string>
     <string name="popularFilter">Popular</string>
     <string name="recommendedFilter">Recommended</string>
@@ -24,6 +27,8 @@
     </string-array>
 
     <string name="landmarkBtn">Mark the landmark as visited</string>
+    <string name="visitedLandmark">Forget this place</string>
+
     <string name="detailOverview">Overview</string>
     <string name="detailHistory">History</string>
     <string name="detailConditions">Conditions</string>

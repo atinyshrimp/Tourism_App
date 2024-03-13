@@ -15,19 +15,19 @@ import com.example.tourism_app.R
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
 
-class ActivityRecyclerAdapter(
+class VisitedActivityAdapter(
     private val activityList: ArrayList<Activity>,
     private val listener: ActivityRecyclerEvent,
     private val user: String,
     private val likeButtonClickListener: LikeButtonClickListener
-) : RecyclerView.Adapter<ActivityRecyclerAdapter.MyViewHolder>() {
+) : RecyclerView.Adapter<VisitedActivityAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
-            R.layout.activity_card, parent,false)
+            R.layout.card_visited_activity, parent,false)
         return MyViewHolder(itemView)
     }
 
@@ -48,6 +48,14 @@ class ActivityRecyclerAdapter(
             storageRef.getFile(localFile).addOnSuccessListener {
                 val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
                 holder.picture.setImageBitmap(bitmap)
+            }
+        }
+
+        DatabaseManager.getVisitDate(user, currentItem.name!!) {visitDate ->
+            if (visitDate != null) {
+                holder.visitDate.text = "Visited on $visitDate"
+            } else {
+                holder.visitDate.visibility = View.GONE
             }
         }
 
@@ -79,6 +87,7 @@ class ActivityRecyclerAdapter(
         val name : TextView = itemView.findViewById(R.id.tvName)
         val location : TextView = itemView.findViewById(R.id.tvLocation)
         val visitCount : TextView = itemView.findViewById(R.id.tvVisitCount)
+        val visitDate : TextView = itemView.findViewById(R.id.tvVisitDate)
         val category : TextView = itemView.findViewById(R.id.tvCategory)
         private val cardClickable : ConstraintLayout = itemView.findViewById(R.id.constraintLayout)
         val picture : ImageView = itemView.findViewById(R.id.ivPicture)

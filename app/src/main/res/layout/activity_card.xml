@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="5dp"
-                android:text="(0000)"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="10sp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvName"
@@ -78,8 +78,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearanceOverlay="@style/image_shape"
-                app:srcCompat="@drawable/louvre_cover" />
+                app:shapeAppearanceOverlay="@style/image_shape" />
 
             <ImageView
                 android:id="@+id/imageView4"

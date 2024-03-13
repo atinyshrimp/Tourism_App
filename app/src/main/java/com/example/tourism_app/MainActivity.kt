@@ -15,23 +15,30 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMain2Binding
     lateinit var navbarView: BottomNavigationView
 
+    private lateinit var pseudo : String
+    private lateinit var mail : String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
+        mail = intent.getStringExtra("mail").toString()
+        pseudo = intent.getStringExtra("pseudo").toString()
 
         // default fragment is Home
-        replaceFragment(HomeFragment())
+        replaceFragment(HomeFragment(pseudo))
 
         navbarView = binding.navView
         navbarView.setOnItemSelectedListener {
             when(it.itemId) {
-                R.id.navigation_home -> replaceFragment(HomeFragment())
+                R.id.navigation_home -> replaceFragment(HomeFragment(pseudo))
                 R.id.navigation_dashboard -> replaceFragment(DashboardFragment())
-                R.id.navigation_notifications -> replaceFragment(NotificationsFragment())
-                R.id.navigation_profile -> replaceFragment(ProfileFragment())
-
+                R.id.navigation_notifications -> replaceFragment(NotificationsFragment(pseudo))
+                R.id.navigation_profile -> {
+                    val profileFragment = ProfileFragment.newInstance(pseudo, mail)
+                    replaceFragment(profileFragment)
+                }
                 else -> {}
             }
             true
