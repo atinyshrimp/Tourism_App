@@ -1,5 +1,6 @@
 package com.example.tourism_app.ui.profile
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -77,7 +78,7 @@ class ProfileFragment : Fragment() {
                     for (clientSnapshot in dataSnapshot.children) {
                         clientSnapshot.ref.child("pseudo").setValue(newPseudo)
                             .addOnSuccessListener {
-                                usernameTextView.text = "Username : $newPseudo"
+                                usernameTextView.text = "Use : $newPseudo"
                             }
                             .addOnFailureListener {
                             }
@@ -88,11 +89,11 @@ class ProfileFragment : Fragment() {
                 }
             })
     }
+    @SuppressLint("SuspiciousIndentation")
     private fun updateMailInDatabase(newMail: String) {
         val oldMail = mailTextView.text.toString().substringAfter(": ").trim() // Extract old mail from TextView
         val userId = FirebaseAuth.getInstance().currentUser?.uid // Get the current user's ID
         val clientRef = FirebaseDatabase.getInstance().getReference("Client")
-
             clientRef.orderByChild("mail").equalTo(oldMail).addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     for (clientSnapshot in dataSnapshot.children) {

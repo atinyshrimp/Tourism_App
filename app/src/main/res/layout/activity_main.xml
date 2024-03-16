@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,10 +8,13 @@
     tools:ignore="MissingDefaultResource">
 
     <LinearLayout
+        android:id="@+id/layoutlogin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".Login">
+        tools:context=".Login"
+        tools:layout_editor_absoluteX="172dp"
+        tools:layout_editor_absoluteY="101dp">
 
         <EditText
             android:id="@+id/usernameTextL"
@@ -18,8 +22,8 @@
             android:layout_height="70dp"
             android:layout_gravity="center"
             android:layout_marginTop="200dp"
-            android:textSize="25sp"
-            android:hint="Username" />
+            android:hint="Username"
+            android:textSize="25sp" />
 
         <EditText
             android:id="@+id/passwordTextL"
@@ -27,10 +31,9 @@
             android:layout_height="70dp"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:textSize="25sp"
             android:hint="Password"
             android:inputType="textPassword"
-            />
+            android:textSize="25sp" />
 
         <Button
             android:id="@+id/loginButtonL"
@@ -38,11 +41,11 @@
             android:layout_height="70dp"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:textSize="25sp"
-            android:text="Login"
-            android:backgroundTintMode="screen"
             android:backgroundTint="@color/gold"
-            android:textColor="@color/black"/>
+            android:backgroundTintMode="screen"
+            android:text="Login"
+            android:textColor="@color/black"
+            android:textSize="25sp" />
 
         <Button
             android:id="@+id/registerButtonL"
@@ -50,10 +53,11 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:text="Register"
-            android:backgroundTintMode="screen"
             android:backgroundTint="@color/gold"
-            android:textColor="@color/black"/>
+            android:backgroundTintMode="screen"
+            android:text="Register"
+            android:textColor="@color/black" />
 
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
