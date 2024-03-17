@@ -68,8 +68,7 @@ At first there was going to be a "ranking" system, the more the user used our ap
 In the profile page the user can modify their credentials. By pressing the "Modify" buttons a popup TextEditor appears to allow the user to modify their credentials. These are then sent to Firebase to verify that the modification is authorised, if everything is fine the users sees their modification directly in the app.
 The modifications were effective, and the Firebase update worked surprisingly well, we didn't expect it to be that fast which was a very good thing.
 
-![image_2024-03-12_171200040](https://github.com/atinyshrimp/Tourism_App/assets/96294983/3922cd08-9dc1-4e9a-a0f8-b19af61baac5)
-![image_2024-03-12_171248008](https://github.com/atinyshrimp/Tourism_App/assets/96294983/e2e4563f-c316-40c6-add3-acbb0cf0f86e)
+![profile](https://github.com/atinyshrimp/Tourism_App/assets/96294983/5fae6ebe-1f95-465e-bda5-8e62590f0ae2)
 
 
 ## Map
