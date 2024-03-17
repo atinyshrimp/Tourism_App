@@ -80,7 +80,7 @@ by Auriane
 - Create an API key to use google services and retrieve the google-services.json file from firebase
 - Import the google map into the application
 - Add custom markers to the map fetching latitude and longitude from firebase
-- Add cardviews to the activities details
+- Add cardviews to the activities details    
 ![](medias/MapDesign.png)
 
 ### Resume
