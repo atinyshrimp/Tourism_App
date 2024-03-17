@@ -38,6 +38,11 @@ class NotificationsViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecy
         openDetailsActivity(activity)
     }
 
+    override fun onVisitedItemClick(position: Int) {
+        val activity = visitedList[position]
+        openDetailsActivity(activity)
+    }
+
     override fun onLikeButtonClicked(position: Int, currentItem: Activity) {
         DatabaseManager.updateLikedActivity(username, currentItem.name!!, fragment.requireContext())
         { updateRecyclerViews(position) }
@@ -189,6 +194,7 @@ class NotificationsViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecy
     private fun openDetailsActivity(activity: Activity){
         val intent = Intent(fragment.context, DetailsActivity::class.java)
         intent.putExtra("activityKey", activity)
+        intent.putExtra("username", username)
         fragment.context?.startActivity(intent)
     }
 

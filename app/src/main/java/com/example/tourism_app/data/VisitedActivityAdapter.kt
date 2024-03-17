@@ -100,13 +100,13 @@ class VisitedActivityAdapter(
         override fun onClick(v: View?) {
             val position = adapterPosition
             if (position != RecyclerView.NO_POSITION) {
-                listener.onItemClick(position)
+                listener.onVisitedItemClick(position)
             }
         }
     }
 
     interface ActivityRecyclerEvent {
-        fun onItemClick(position: Int)
+        fun onVisitedItemClick(position: Int)
     }
 
     interface LikeButtonClickListener {
