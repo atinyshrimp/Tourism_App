@@ -3,6 +3,7 @@ Goal: In a team of 4, make an app, preferably tourism/education-themed, from scr
 
 ## Contents
 - [Overview](#overview)
+- [Branches Organisation](#branches-organisation)
 - [Authentification](#authentification)
 - [Map](#map)
 - [Database Management](#database-management)
@@ -11,6 +12,11 @@ Goal: In a team of 4, make an app, preferably tourism/education-themed, from scr
 
 ## Overview
 As the Paris Olympics approach, we thought it would be a good idea to make an app that lists most ***FREE*** activities accessible within Paris, to make discovering the French capital easier to tourists.
+
+## Branches Organisation
+We had many problems with the merges. You should find the branch 'Try Merging' to test almost all functionalities. Regrettably, it still has issues that are working well either in the 'master' branch or the 'Map' branch.    
+On the 'master' branch you should be able to find everything working perfectly apart from the Map.    
+On the 'Map' branch, the map has been implemented but with an older version of the master branch, thus with many features missing.   
 
 ### Task Distribution
 |Task|Contributor|
