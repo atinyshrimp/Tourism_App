@@ -1,10 +1,13 @@
 package com.example.tourism_app
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.widget.Toast
+import android.view.View
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.tourism_app.data.Activity
 import com.example.tourism_app.databinding.DetailsActivityBinding
@@ -13,10 +16,6 @@ import com.example.tourism_app.ui.history.HistoryFragment
 import com.example.tourism_app.ui.overview.OverviewFragment
 import com.example.tourism_app.ui.transport.TransportFragment
 import com.google.android.material.tabs.TabLayout
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
 
@@ -27,12 +26,16 @@ class DetailsActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setup()
+    }
 
+    private fun setup() {
         binding = DetailsActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // getting the Activity from the RecyclerView item
         currentActivity = intent.getParcelableExtra("activityKey")!!
+        username = intent.getStringExtra("username").toString()
         setupPage()
 
         // default fragment is "Overview"
@@ -42,8 +45,6 @@ class DetailsActivity: AppCompatActivity() {
         binding.btnBack.setOnClickListener {
             finish()
         }
-
-        username = intent.getStringExtra("username").toString()
 
         binding.tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -59,15 +60,11 @@ class DetailsActivity: AppCompatActivity() {
                 }
             }
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            override fun onTabUnselected(tab: TabLayout.Tab?) { }
 
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-
-            }
-
+            override fun onTabReselected(tab: TabLayout.Tab?) { }
         })
+
     }
 
     private fun replaceFragment(fragment: Fragment) {
@@ -78,12 +75,53 @@ class DetailsActivity: AppCompatActivity() {
         fragmentTransaction.commit()
     }
 
+    private fun setButtonIcons() {
+        val likeBtn = binding.ibLikeBtn
+        val visitBtn: Button = binding.visitBtn
+        DatabaseManager.isActivityLiked(username, currentActivity.name!!) { isLiked ->
+            if (isLiked) {
+                likeBtn.setImageResource(R.drawable.ic_heart_filled_black_24dp)
+                visitBtn.visibility = View.VISIBLE
+                DatabaseManager.isActivityVisited(username, currentActivity.name!!) {isVisited ->
+                    if (!isVisited) {
+                        visitBtn.text = resources.getText(R.string.landmarkBtn)
+                        visitBtn.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.gold))
+                        visitBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null,
+                            ContextCompat.getDrawable(this, R.drawable.ic_eye_black_24dp), null)
+                    } else {
+                        visitBtn.text = resources.getText(R.string.visitedLandmark)
+                        visitBtn.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.half_gold))
+                        visitBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null,
+                            ContextCompat.getDrawable(this, R.drawable.ic_low_vision_black_24dp), null)
+                    }
+                }
+            } else {
+                likeBtn.setImageResource(R.drawable.ic_heart_black_24dp)
+                visitBtn.visibility = View.GONE
+            }
+        }
+        likeBtn.invalidate()
+        visitBtn.invalidate()
+    }
+
     @SuppressLint("SetTextI18n")
     private fun setupPage() {
         binding.tvActName.text = currentActivity.name
         binding.tvActCategory.text = currentActivity.category
         binding.tvActLocation.text = "Paris ${currentActivity.getArrondissement()}"
+        setButtonIcons()
+        setActivityImage()
 
+        binding.ibLikeBtn.setOnClickListener{
+            handleLikeButtonClick()
+        }
+
+        binding.visitBtn.setOnClickListener{
+            handleVisitButtonClick()
+        }
+    }
+
+    private fun setActivityImage() {
         var imageName = currentActivity.name
         if(imageName != null) {
             imageName = imageName.replace(" ", "")
@@ -94,49 +132,13 @@ class DetailsActivity: AppCompatActivity() {
                 binding.imageView.setImageBitmap(bitmap)
             }
         }
+    }
 
-        binding.imageButton.setOnClickListener{
-            //we need the pseudo to save it at the right place
-            //if already saved then delete it otherwise create new element in bdd
-            val database = FirebaseDatabase.getInstance().reference
-            var idDelete = ""
-            //in the branch of the user :
-            val savedlieuref = database.child("Saved_lieu").child(username)
-            savedlieuref.addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    var isLieuLiked = false
-                    for (userSnapshot in dataSnapshot.children) {
-                        //we should be in the user section, looking at all the elements
-                        val nameFromDB = userSnapshot.child("name").value
-                        //we need to have the name of the lieu to compare : ex : Lieu1 instead of Colonne...
-                        if(currentActivity.name==nameFromDB){
-                            isLieuLiked = true
-                            idDelete = userSnapshot.key.toString()
-                            break
-                        }
-                    }
-                    if(isLieuLiked){
-                        //we delete the element
-                        val deleteLieu = database.child("Saved_lieu").child(username).child(idDelete)
-                        val deleteTask = deleteLieu.removeValue()
-                        deleteTask.addOnSuccessListener {
-                            Toast.makeText(applicationContext,"Place removed from favorites", Toast.LENGTH_SHORT).show()
-                        }.addOnFailureListener{
-                            Toast.makeText(applicationContext,"Removing failed", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                    else{
-                        //we create liked lieu element
-                        val newUserRef = savedlieuref.push()
-                        newUserRef.child("name").setValue(currentActivity.name)
-                        newUserRef.child("visited").setValue(0)
-                        Toast.makeText(applicationContext,"Place added to favorites", Toast.LENGTH_SHORT).show()
-                    }
-                }
-                override fun onCancelled(databaseError: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-            })
-        }
+    private fun handleLikeButtonClick() {
+        DatabaseManager.updateLikedActivity(username, currentActivity.name!!, applicationContext, ::setButtonIcons)
+    }
+
+    private fun handleVisitButtonClick() {
+        DatabaseManager.updateVisitedActivity(username, currentActivity.name!!, applicationContext, ::setButtonIcons)
     }
 }
