@@ -78,7 +78,7 @@ class ProfileFragment : Fragment() {
                     for (clientSnapshot in dataSnapshot.children) {
                         clientSnapshot.ref.child("pseudo").setValue(newPseudo)
                             .addOnSuccessListener {
-                                usernameTextView.text = "Use : $newPseudo"
+                                usernameTextView.text = "User : $newPseudo"
                             }
                             .addOnFailureListener {
                             }
