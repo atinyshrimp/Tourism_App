@@ -75,7 +75,7 @@ by Auriane
 - Import the google map into the application
 - Add custom markers to the map fetching latitude and longitude from firebase
 - Add cardviews to the activities details
-
+![](medias/MapDesign.png)
 
 ### Resume
 The map page display a google map with the markers of the places we entered in our database. We can like places from the card views at the bottom and clicking on those card will send you to the details page for each of those.   
