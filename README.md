@@ -3,6 +3,7 @@ Goal: In a team of 4, make an app, preferably tourism/education-themed, from scr
 
 ## Contents
 - [Overview](#overview)
+- [Branch Organisation](#branch-organisation)
 - [Authentification](#authentification)
 - [Map](#map)
 - [Database Management](#database-management)
