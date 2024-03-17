@@ -3,6 +3,7 @@ Goal: In a team of 4, make an app, preferably tourism/education-themed, from scr
 
 ## Contents
 - [Overview](#overview)
+- [Branches Organisation](#branches-organisation)
 - [Authentification](#authentification)
 - [Map](#map)
 - [Database Management](#database-management)
@@ -11,6 +12,11 @@ Goal: In a team of 4, make an app, preferably tourism/education-themed, from scr
 
 ## Overview
 As the Paris Olympics approach, we thought it would be a good idea to make an app that lists most ***FREE*** activities accessible within Paris, to make discovering the French capital easier to tourists.
+
+## Branches Organisation
+We had many problems with the merges. You should find the branch 'Try Merging' to test almost all functionalities. Regrettably, it still has issues that are working well either in the 'master' branch or the 'Map' branch.    
+On the 'master' branch you should be able to find everything working perfectly apart from the Map.    
+On the 'Map' branch, the map has been implemented but with an older version of the master branch, thus with many features missing.   
 
 ### Task Distribution
 |Task|Contributor|
@@ -62,8 +68,7 @@ At first there was going to be a "ranking" system, the more the user used our ap
 In the profile page the user can modify their credentials. By pressing the "Modify" buttons a popup TextEditor appears to allow the user to modify their credentials. These are then sent to Firebase to verify that the modification is authorised, if everything is fine the users sees their modification directly in the app.
 The modifications were effective, and the Firebase update worked surprisingly well, we didn't expect it to be that fast which was a very good thing.
 
-![image_2024-03-12_171200040](https://github.com/atinyshrimp/Tourism_App/assets/96294983/3922cd08-9dc1-4e9a-a0f8-b19af61baac5)
-![image_2024-03-12_171248008](https://github.com/atinyshrimp/Tourism_App/assets/96294983/e2e4563f-c316-40c6-add3-acbb0cf0f86e)
+![profile](https://github.com/atinyshrimp/Tourism_App/assets/96294983/5fae6ebe-1f95-465e-bda5-8e62590f0ae2)
 
 
 ## Map
@@ -74,7 +79,7 @@ by Auriane
 - Create an API key to use google services and retrieve the google-services.json file from firebase
 - Import the google map into the application
 - Add custom markers to the map fetching latitude and longitude from firebase
-- Add cardviews to the activities details
+- Add cardviews to the activities details    
 ![](medias/MapDesign.png)
 
 ### Resume
