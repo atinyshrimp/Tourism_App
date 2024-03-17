@@ -190,10 +190,9 @@ by Joyce
     ```
     - The app wouldn't launch because of these lines of code above
     - I ended up doing a "custom" bottom nav bar instead
+- The first few days, working with **XML** xas a hassle, as I had never worked with it before. The principle of **Layouts** was very foreign to me but I got the hang of it pretty quickly.
  
 ## Conclusion
-Write something here...
-
 ### Possible ameliorations
 - Interactivity with the tab in the Home Fragment, notably to filter the displayed places.
 - SearchView when clicking on the categories.
