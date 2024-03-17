@@ -26,7 +26,9 @@ data class Activity(
     var name: String? = null,
     var description: String? = null,
     var transport: Transport? = null,
-    var url: String? = null
+    var url: String? = null,
+    var latitude: Double? = null,
+    var longitude:Double? = null
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
@@ -36,7 +38,9 @@ data class Activity(
         parcel.readString(),
         parcel.readString(),
         parcel.readParcelable(Transport::class.java.classLoader),
-        parcel.readString()
+        parcel.readString(),
+        parcel.readDouble(),
+        parcel.readDouble()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -48,6 +52,8 @@ data class Activity(
         parcel.writeString(description)
         parcel.writeParcelable(transport, flags)
         parcel.writeString(url)
+        parcel.writeDouble(latitude!!)
+        parcel.writeDouble(longitude!!)
     }
 
     override fun describeContents(): Int {
