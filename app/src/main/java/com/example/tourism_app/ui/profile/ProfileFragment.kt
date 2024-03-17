@@ -1,5 +1,6 @@
 package com.example.tourism_app.ui.profile
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,11 @@ import com.example.tourism_app.R
 import com.example.tourism_app.databinding.FragmentNotificationsBinding
 import com.example.tourism_app.databinding.FragmentProfileBinding
 import com.example.tourism_app.ui.notifications.NotificationsFragment
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class ProfileFragment : Fragment() {
     private lateinit var usernameTextView: TextView
@@ -35,8 +40,8 @@ class ProfileFragment : Fragment() {
         val pseudo = arguments?.getString("pseudo") ?: ""
         val mail = arguments?.getString("mail") ?: ""
 
-        val usernameTextView = view.findViewById<TextView>(R.id.username_txt)
-        val mailTextView = view.findViewById<TextView>(R.id.mail_txt)
+        usernameTextView = view.findViewById<TextView>(R.id.username_txt)
+        mailTextView = view.findViewById<TextView>(R.id.mail_txt)
 
         usernameTextView.text = "Username : "+pseudo
         mailTextView.text = "Mail : "+mail
@@ -44,19 +49,17 @@ class ProfileFragment : Fragment() {
         binding.changeUserBtn.setOnClickListener {
             toggleInputVisibility(true)
         }
-
         binding.changeMailBtn.setOnClickListener {
-            toggleInputVisibility(false)
-        }
+            toggleInputVisibility(false)}
 
     }
     private fun toggleInputVisibility(isPseudo: Boolean) {
         val editText = if (isPseudo) binding.inputUsername else binding.inputMail
         val newVisibility = if (editText.visibility == View.VISIBLE) {
             if (isPseudo) {
-                //updatePseudoInDatabase(editText.text.toString())
+                updatePseudoInDatabase(editText.text.toString())
             } else {
-                //updateMailInDatabase(editText.text.toString())
+                updateMailInDatabase(editText.text.toString())
             }
             View.GONE
         } else {
@@ -67,30 +70,48 @@ class ProfileFragment : Fragment() {
 
 
     private fun updatePseudoInDatabase(newPseudo: String) {
+        val oldPseudo = usernameTextView.text.toString().substringAfter(": ").trim() // Extract old pseudo from TextView
         val clientRef = FirebaseDatabase.getInstance().getReference("Client")
-        val currentUserRef = clientRef.child("userID")
-        currentUserRef.child("pseudo").setValue(newPseudo)
-            .addOnSuccessListener {
-                // Update the text directly using the initialized TextView
-                usernameTextView.text = "Username : $newPseudo"
-            }
-            .addOnFailureListener {
-                // Handle failure
-            }
-    }
+        clientRef.orderByChild("pseudo").equalTo(oldPseudo).addListenerForSingleValueEvent(object :
+                ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    for (clientSnapshot in dataSnapshot.children) {
+                        clientSnapshot.ref.child("pseudo").setValue(newPseudo)
+                            .addOnSuccessListener {
+                                usernameTextView.text = "Use : $newPseudo"
+                            }
+                            .addOnFailureListener {
+                            }
+                    }
+                }
 
-    private fun updateMailInDatabase(newMail: String) {
-        val clientRef = FirebaseDatabase.getInstance().getReference("Client")
-        val currentUserRef = clientRef.child("userID")
-        currentUserRef.child("mail").setValue(newMail)
-            .addOnSuccessListener {
-                // Update the text directly using the initialized TextView
-                mailTextView.text = "Address : $newMail"
-            }
-            .addOnFailureListener {
-                // Handle failure
-            }
+                override fun onCancelled(databaseError: DatabaseError) {
+                }
+            })
     }
+    @SuppressLint("SuspiciousIndentation")
+    private fun updateMailInDatabase(newMail: String) {
+        val oldMail = mailTextView.text.toString().substringAfter(": ").trim() // Extract old mail from TextView
+        val userId = FirebaseAuth.getInstance().currentUser?.uid // Get the current user's ID
+        val clientRef = FirebaseDatabase.getInstance().getReference("Client")
+            clientRef.orderByChild("mail").equalTo(oldMail).addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    for (clientSnapshot in dataSnapshot.children) {
+                        clientSnapshot.ref.child("mail").setValue(newMail)
+                            .addOnSuccessListener {
+                                mailTextView.text = "Mail : $newMail"
+                            }
+                            .addOnFailureListener {
+                            }
+                    }
+                }
+                override fun onCancelled(databaseError: DatabaseError) {
+                }
+            })
+        }
+
+
+
     companion object {
         fun newInstance(pseudo: String, mail : String): ProfileFragment {
             val f = ProfileFragment()

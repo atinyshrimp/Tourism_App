@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.tourism_app.DatabaseManager
 import com.example.tourism_app.DetailsActivity
 import com.example.tourism_app.MainActivity
 import com.example.tourism_app.data.Activity
@@ -20,17 +21,26 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent {
+class HomeViewModel :
+    ViewModel(),
+    ActivityRecyclerAdapter.ActivityRecyclerEvent,
+    ActivityRecyclerAdapter.LikeButtonClickListener {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var activityList: ArrayList<Activity>
     private lateinit var fragment: HomeFragment
     private lateinit var database: DatabaseReference
     lateinit var username: String
+    private lateinit var adapter: ActivityRecyclerAdapter
 
     override fun onItemClick(position: Int) {
         val activity = activityList[position]
         openDetailsActivity(activity)
+    }
+
+    override fun onLikeButtonClicked(position: Int, currentItem: Activity) {
+        DatabaseManager.updateLikedActivity(username, currentItem.name!!, fragment.requireContext()
+        ) { adapter.notifyItemChanged(position) }
     }
 
     fun setupViews(binding: FragmentHomeBinding, homeFragment: HomeFragment, user: String) {
@@ -101,7 +111,9 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
                         val activity = activitySnapshot.getValue(Activity::class.java)
                         activityList.add(activity!!)
                     }
-                    activityRecyclerView.adapter = ActivityRecyclerAdapter(activityList, this@HomeViewModel, user)
+                    adapter = ActivityRecyclerAdapter(activityList,
+                        this@HomeViewModel, user, this@HomeViewModel)
+                    activityRecyclerView.adapter = adapter
                 }
             }
 
@@ -132,7 +144,7 @@ class HomeViewModel : ViewModel(), ActivityRecyclerAdapter.ActivityRecyclerEvent
         val intent = Intent(fragment.context, DetailsActivity::class.java)
         intent.putExtra("activityKey", activity)
         intent.putExtra("username",username)
-        fragment.context?.startActivity(intent)
+        fragment.requireContext().startActivity(intent)
     }
 
     private fun setupUserPicInteractivity() {
