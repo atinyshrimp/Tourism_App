@@ -4,7 +4,7 @@ Goal: In a team of 4, make an app, preferably tourism/education-themed, from scr
 ## Contents
 - [Overview](#overview)
 - [Authentification](#authentification)
-- [Geolocation](#geolocation)
+- [Map](#map)
 - [Database Management](#database-management)
 - [Activity Details](#activity-details)
 - [Conclusion](#conclusion)
@@ -16,7 +16,7 @@ As the Paris Olympics approach, we thought it would be a good idea to make an ap
 |Task|Contributor|
 |----|-----------|
 |Authentification|Ali|
-|Geolocation|Auriane|
+|Map|Auriane|
 |Database Management|Salomé|
 |Activity Details|Joyce|
 
@@ -25,8 +25,8 @@ As the Paris Olympics approach, we thought it would be a good idea to make an ap
 ![log into account](medias/login.gif)
 - Like and unlike places. \
 ![liking a place](medias/like_a_place.gif) ![unliking a place](medias/unlike_a_place.gif)
-- Geolocation of the different listed places. \
-*GIF here*
+- Map of the different listed places. \
+![map overview](medias/MapMarkers.gif)
 
 Our design was solely made on Figma, while taking inspiration from many designs on [dribbble](https://dribbble.com/), mostly the following:
 - [Travel App Design by Anik Deb for Grapeslab](https://dribbble.com/shots/18741087-Travel-App-Design)
@@ -66,8 +66,28 @@ The modifications were effective, and the Firebase update worked surprisingly we
 ![image_2024-03-12_171248008](https://github.com/atinyshrimp/Tourism_App/assets/96294983/e2e4563f-c316-40c6-add3-acbb0cf0f86e)
 
 
-## Geolocation
+## Map
 by Auriane
+
+### Tasks
+- Design the map page
+- Create an API key to use google services and retrieve the google-services.json file from firebase
+- Import the google map into the application
+- Add custom markers to the map fetching latitude and longitude from firebase
+- Add cardviews to the activities details
+
+
+### Resume
+The map page display a google map with the markers of the places we entered in our database. We can like places from the card views at the bottom and clicking on those card will send you to the details page for each of those.   
+I started by creating a free API key on [Google Cloud Platform]([https://console.cloud.google.com/welcome/new?project=stellar-fx-415608](https://console.cloud.google.com/)). I then downloaded the google-services.json file from out firebase project. I imported it into our application. I followed the tutorials to add a basic map to our project by uploading the manifest, the gradle build and adding the API key I add obtained. I updated the minimum SDK version according to the requirements of using google maps in our app.   
+After that, the pull merging with github destroyed quite a bit, resulting in many build issues, deleting at each run the json file. Those issues got solved after some time and I got the map back. I advanced on it by adding the cardviews of activities at the bottom to follow the initial design. Then, I created the custom marker for a given location.    
+I tried pushing on github which resulted on several merge issues for those pulling it. This resulted in the creation of a new branch 'Map'.   
+I added the latitude and longitude to our Firebase Database. After some difficulties I managed to fetch these data to add the markers at the right places.   
+
+### Challenges & Takeaways
+Learning how to use the map was difficult at first. The official tutorial advised to start with a Google Map Activity, that has a lot of files already created, instead of an empty one whose build is quite different. Additinally, using fragments was new and understanding how the fragment view model work took time.   
+Using Github with a group while working on very different part of the project gave the impression that the merges would work flawlessly. But there was actually a lot of overlapping in the project and the gradle.build got modified as well as other important central parts of the code. I should have pushed on github more often, to make smaller changes instead of massive ones that caused merge and build conflicts.    
+Using firebase data to create markers also proved difficult. There was a lot of ressources about creating a marker on the app and then adding the location to firebase but fewer on the opposite action. At the end, I managed to do it but failed to make them responsive (onItemClick, open the details activities OR onItemClick, scroll horizontally to the right activity cardview) like the activities cards at the bottom can be.   
 
 
 ## Database Management
@@ -168,7 +188,7 @@ by Joyce
     setupActionBarWithNavController(navController, appBarConfiguration)
     navView.setupWithNavController(navController)
     ```
-    - The app wouldn't lauch because of these lines of code above
+    - The app wouldn't launch because of these lines of code above
     - I ended up doing a "custom" bottom nav bar instead
  
 ## Conclusion
