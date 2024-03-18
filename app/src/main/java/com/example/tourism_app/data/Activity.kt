@@ -27,7 +27,7 @@ data class Activity(
     var description: String? = null,
     var transport: Transport? = null,
     var nbVisit: Int? = null,
-    var url: String? = null
+    var url: String? = null,
     var latitude: Double? = null,
     var longitude:Double? = null
 
@@ -41,7 +41,7 @@ data class Activity(
         parcel.readString(),
         parcel.readParcelable(Transport::class.java.classLoader),
         parcel.readInt(),
-        parcel.readString()
+        parcel.readString(),
         parcel.readDouble(),
         parcel.readDouble()
 

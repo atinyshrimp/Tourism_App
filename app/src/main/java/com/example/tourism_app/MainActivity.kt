@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         navbarView.setOnItemSelectedListener {
             when(it.itemId) {
                 R.id.navigation_home -> replaceFragment(HomeFragment(pseudo))
-                R.id.navigation_dashboard -> replaceFragment(DashboardFragment())
+                R.id.navigation_dashboard -> replaceFragment(DashboardFragment(pseudo))
                 R.id.navigation_notifications -> replaceFragment(NotificationsFragment(pseudo))
                 R.id.navigation_profile -> {
                     val profileFragment = ProfileFragment.newInstance(pseudo, mail)

@@ -29,7 +29,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 
-class DashboardFragment : Fragment() {
 
 class DashboardFragment (private val user: String) : Fragment(), OnMapReadyCallback {
 
@@ -37,22 +36,26 @@ class DashboardFragment (private val user: String) : Fragment(), OnMapReadyCallb
     private var _binding: FragmentDashboardBinding? = null
     private lateinit var database: DatabaseReference
     private val binding get() = _binding!!
+    private lateinit var dashboardViewModel: DashboardViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
+        dashboardViewModel =
+            ViewModelProvider(this)[DashboardViewModel::class.java]
 
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textDashboard
-        dashboardViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+
+        dashboardViewModel.username = user
+        dashboardViewModel.setupViews(binding, this, user)
+
         return root
     }
 

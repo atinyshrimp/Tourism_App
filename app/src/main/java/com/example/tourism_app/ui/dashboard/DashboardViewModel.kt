@@ -74,5 +74,4 @@ class DashboardViewModel : ViewModel() , ActivityMapRecycler.ActivityRecyclerEve
         intent.putExtra("username",username)
         fragment.context?.startActivity(intent)
     }
-    val text: LiveData<String> = _text
 }
